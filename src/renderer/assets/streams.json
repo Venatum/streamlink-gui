@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "aypierre",
+    "plugin": {
+      "name": "twitch",
+      "auth": false,
+      "login": "",
+      "password": "",
+      "key": ""
+    },
+    "url": "twitch.tv/aypierre",
+    "icon": "",
+    "favourite": true,
+    "sensitive": false
+  },
+  {
+    "id": 4,
+    "name": "aypierre42",
+    "plugin": {
+      "name": "twitch",
+      "auth": false,
+      "login": "",
+      "password": "",
+      "key": ""
+    },
+    "url": "twitch.tv/aypierre",
+    "icon": "",
+    "favourite": true,
+    "sensitive": false
+  },
+  {
+    "id": 2,
+    "name": "nems",
+    "plugin": {
+      "name": "twitch",
+      "auth": false,
+      "login": "",
+      "password": "",
+      "key": ""
+    },
+    "url": "twitch.tv/nems",
+    "icon": "",
+    "favourite": false,
+    "sensitive": false
+  },
+  {
+    "id": 3,
+    "name": "cathleenprecious",
+    "plugin": {
+      "name": "chaturbate",
+      "auth": false,
+      "login": "",
+      "password": "",
+      "key": ""
+    },
+    "url": "chaturbate.com/cathleenprecious",
+    "icon": "",
+    "favourite": false,
+    "sensitive": true
+  }
+]
