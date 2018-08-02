@@ -10,8 +10,10 @@
       "key": ""
     },
     "url": "twitch.tv/aypierre",
+    "quality": "best",
     "icon": "",
     "favourite": true,
+    "live": false,
     "sensitive": false
   },
   {
@@ -25,8 +27,10 @@
       "key": ""
     },
     "url": "twitch.tv/aypierre",
+    "quality": "best",
     "icon": "",
     "favourite": true,
+    "live": false,
     "sensitive": false
   },
   {
@@ -40,8 +44,10 @@
       "key": ""
     },
     "url": "twitch.tv/nems",
+    "quality": "best",
     "icon": "",
     "favourite": false,
+    "live": false,
     "sensitive": false
   },
   {
@@ -55,8 +61,10 @@
       "key": ""
     },
     "url": "chaturbate.com/cathleenprecious",
+    "quality": "best",
     "icon": "",
     "favourite": false,
+    "live": false,
     "sensitive": true
   }
 ]

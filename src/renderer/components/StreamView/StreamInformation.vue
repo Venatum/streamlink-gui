@@ -19,11 +19,17 @@
             </v-card-title>
             <v-card-actions>
                 <v-layout align-center justify-space-around row fill-height>
-                    <v-tooltip bottom>
+                    <v-tooltip v-if="stream.favourite" bottom>
                         <v-btn @click="updateFavourite" icon flat color="yellow" slot="activator">
                             <v-icon>star</v-icon>
                         </v-btn>
                         <span>Remove from favourite</span>
+                    </v-tooltip>
+                    <v-tooltip v-else bottom>
+                        <v-btn @click="updateFavourite" icon flat color="grey" slot="activator">
+                            <v-icon>star</v-icon>
+                        </v-btn>
+                        <span>Add to favourite</span>
                     </v-tooltip>
                     <v-tooltip bottom>
                         <v-btn @click="setEditStreamTrue" icon flat color="primary" slot="activator">
@@ -47,6 +53,8 @@
 
 <script>
     import EditStream from './EditStream'
+    import {StreamLinkGuiMutations} from '../../store/mutations'
+    import {StreamLinkGuiActions} from '../../store/actions'
 
     export default {
       name: 'StreamInformation',
@@ -59,10 +67,10 @@
       },
       methods: {
         updateFavourite () {
-          this.stream.favourite = !this.stream.favourite
+          this.$store.commit(StreamLinkGuiMutations.UPDATE_FAVOURITE, this.stream.id)
         },
         updateStream (stream) {
-          this.stream = stream
+          this.$store.commit(StreamLinkGuiMutations.UPDATE_STREAM, stream)
         },
         deleteStream () {
           this.$emit('deleteStream', this.stream.id)
@@ -74,7 +82,7 @@
           this.editStream = true
         },
         playStream () {
-
+          this.$store.dispatch(StreamLinkGuiActions.PLAY_STREAM, this.stream)
         }
       }
     }

@@ -1,6 +1,8 @@
 <template>
     <v-container grid-list-md text-xs-center>
         <v-layout row wrap>
+            <!-- StreamAlert -->
+            <stream-alert class="px-0"></stream-alert>
             <v-container fluid>
                 <v-expansion-panel expand popout>
                     <v-expansion-panel-content value="true">
@@ -58,10 +60,12 @@
 
 <script>
     import StreamInformation from './StreamView/StreamInformation'
+    import {StreamLinkGuiMutations} from '../store/mutations'
+    import StreamAlert from './StreamView/StreamAlert'
 
     export default {
       name: 'StreamView',
-      components: {StreamInformation},
+      components: {StreamAlert, StreamInformation},
       data: function () {
         return {
           panelFavourite: true,
@@ -71,24 +75,12 @@
         }
       },
       methods: {
-        updateStreamInfo (infos) {
-          console.log(infos)
-          for (let stream in this.streams) {
-            if (stream.id === infos.id) {
-              for (let info in infos) {
-                console.log(stream[info])
-                stream[info] = infos[info]
-                break
-              }
-            }
-          }
-        },
         deleteStream (id) {
           this.deleteId = id
           this.deleteAlerte = true
         },
         deleteConfirm () {
-          this.streams = this.streams.filter(stream => stream.id !== this.deleteId)
+          this.$store.commit(StreamLinkGuiMutations.DEL_STREAM, this.deleteId)
         }
       },
       computed: {

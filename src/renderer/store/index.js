@@ -8,7 +8,12 @@ Vue.use(Vuex)
 
 const state = {
   streams: [],
-  plugins: []
+  plugins: [],
+  alert: {
+    msg: 'Welcome on Streamlink-gui',
+    type: 'success',
+    display: true
+  }
 }
 
 export default new Vuex.Store({
