@@ -1,8 +1,12 @@
 <template>
     <div>
         <v-card flat class="elevation-20 white--text">
+            <!--<v-card-media class="streamLogo"-->
+                          <!--:src="`https://unsplash.it/200/200?image=${Math.floor(Math.random() * 100) + 1}`"-->
+                          <!--width="200px" height="200px"-->
+            <!--&gt;</v-card-media>-->
             <v-card-media class="streamLogo"
-                          :src="`https://unsplash.it/200/200?image=${Math.floor(Math.random() * 100) + 1}`"
+                          :src="getIcon"
                           width="200px" height="200px"
             ></v-card-media>
             <v-card-title>
@@ -63,6 +67,11 @@
       data: function () {
         return {
           editStream: false
+        }
+      },
+      computed: {
+        getIcon () {
+          return (this.stream.icon) ? this.stream.icon : '/static/Icons/noImage.svg'
         }
       },
       methods: {

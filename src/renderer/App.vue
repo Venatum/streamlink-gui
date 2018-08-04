@@ -56,7 +56,8 @@
 </template>
 
 <script>
-  import {StreamLinkGuiMutations} from './store/mutations'
+  // import {StreamLinkGuiMutations} from './store/mutations'
+  import {StreamLinkGuiActions} from './store/actions'
 
   export default {
     name: 'streamlink-gui',
@@ -71,13 +72,16 @@
       title: 'Streamlink GUI'
     }),
     mounted () {
-      try {
-        let data = require('@/assets/streams.json')
-        this.$store.commit(StreamLinkGuiMutations.SET_STREAMS, data)
-      } catch (e) {
-        // @TODO: add error advertising
-        console.error('Streams.json doesn\'t exist')
-      }
+      this.$store.dispatch(StreamLinkGuiActions.SET_STREAMS)
+      // try {
+      //   let data = require('@/assets/streams.json')
+      //   // let data = require('/static/streams.json')
+      //   this.$store.commit(StreamLinkGuiMutations.SET_STREAMS, data)
+      // } catch (e) {
+      //   // @TODO: add error advertising
+      //   console.error('Streams.json doesn\'t exist')
+      //   this.$store.commit(StreamLinkGuiMutations.SET_ALERT, {msg: 'Streams.json not found.', type: 'error'})
+      // }
     }
   }
 </script>
