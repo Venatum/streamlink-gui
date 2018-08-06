@@ -33,6 +33,20 @@ export function startStream (command, ctx) {
   // })
 }
 
+export function onLive (command) {
+  let cmd = childProcess.spawn(command, {
+    shell: true
+  })
+
+  cmd.stdout.on('data', (data) => {
+    data = data.toString('utf8')
+    return (!data.includes('No playable streams found on this URL'))
+  })
+  cmd.stderr.on('data', (data) => {
+    return false
+  })
+}
+
 /**
  * Storage
  */

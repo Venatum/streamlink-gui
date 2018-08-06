@@ -73,15 +73,7 @@
     }),
     mounted () {
       this.$store.dispatch(StreamLinkGuiActions.SET_STREAMS)
-      // try {
-      //   let data = require('@/assets/streams.json')
-      //   // let data = require('/static/streams.json')
-      //   this.$store.commit(StreamLinkGuiMutations.SET_STREAMS, data)
-      // } catch (e) {
-      //   // @TODO: add error advertising
-      //   console.error('Streams.json doesn\'t exist')
-      //   this.$store.commit(StreamLinkGuiMutations.SET_ALERT, {msg: 'Streams.json not found.', type: 'error'})
-      // }
+      this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams)
     }
   }
 </script>

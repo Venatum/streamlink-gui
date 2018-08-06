@@ -1,6 +1,5 @@
 <template>
     <div class="streamAlert">
-        <!--<v-alert v-model="getDisplay" dismissible :type="this.$store.state.alert.type" style="text-align: center">-->
         <v-alert :value="getDisplay" :type="this.$store.state.alert.type" style="text-align: center">
             {{ this.$store.state.alert.msg }}
         </v-alert>

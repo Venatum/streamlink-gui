@@ -1,10 +1,6 @@
 <template>
     <div>
         <v-card flat class="elevation-20 white--text">
-            <!--<v-card-media class="streamLogo"-->
-                          <!--:src="`https://unsplash.it/200/200?image=${Math.floor(Math.random() * 100) + 1}`"-->
-                          <!--width="200px" height="200px"-->
-            <!--&gt;</v-card-media>-->
             <v-card-media class="streamLogo"
                           :src="getIcon"
                           width="200px" height="200px"
@@ -12,6 +8,7 @@
             <v-card-title>
                 <v-layout align-center justify-space-around row fill-height>
                     <!--<v-icon>fab fa-twitch</v-icon>-->
+                    <img v-if="stream.live" src="/static/Icons/live.svg" width="20" height="20"/>
                     {{ stream.name }}
                     <v-tooltip bottom>
                         <v-btn @click="playStream" icon flat slot="activator">
