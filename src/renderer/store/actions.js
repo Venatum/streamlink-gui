@@ -40,8 +40,11 @@ const actions = {
   },
   [StreamLinkGuiActions.ON_LIVE]: (ctx, streams) => {
     for (let stream in streams) {
+      // @TODO
       if (onLive(`streamlink.exe ${streams[stream].url}`)) {
-        console.log('Live')
+        ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: true})
+      } else {
+        ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: false})
       }
     }
   }

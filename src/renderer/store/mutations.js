@@ -3,6 +3,7 @@ export const StreamLinkGuiMutations = {
   UPDATE_STREAM: 'updateStream',
   DEL_STREAM: 'delStream',
   UPDATE_FAVOURITE: 'updateFavourite',
+  UPDATE_LIVE: 'updateLive',
   SET_ALERT: 'setAlert',
   SET_PLUGINS: 'setPlugins'
 }
@@ -28,6 +29,14 @@ const mutations = {
     for (let stream in state.streams) {
       if (state.streams[stream].id === id) {
         state.streams[stream].favourite = !state.streams[stream].favourite
+        break
+      }
+    }
+  },
+  [StreamLinkGuiMutations.UPDATE_LIVE]: (state, data) => {
+    for (let stream in state.streams) {
+      if (state.streams[stream].id === data.id) {
+        state.streams[stream].live = data.live
         break
       }
     }

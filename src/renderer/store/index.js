@@ -13,6 +13,10 @@ const state = {
     msg: 'Welcome on Streamlink-gui',
     type: 'success',
     display: true
+  },
+  config: {
+    id: 0,
+    language: 'english'
   }
 }
 

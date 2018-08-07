@@ -7,8 +7,8 @@
             ></v-card-media>
             <v-card-title>
                 <v-layout align-center justify-space-around row fill-height>
-                    <!--<v-icon>fab fa-twitch</v-icon>-->
-                    <img v-if="stream.live" src="/static/Icons/live.svg" width="20" height="20"/>
+                    <v-icon v-if="stream.live" style="color: red">fas fa-circle</v-icon>
+                    <v-icon v-else style="color: grey">fas fa-circle</v-icon>
                     {{ stream.name }}
                     <v-tooltip bottom>
                         <v-btn @click="playStream" icon flat slot="activator">
