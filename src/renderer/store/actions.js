@@ -25,15 +25,15 @@ const actions = {
       ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: 'No streams.json file.', type: 'error' })
     }
   },
-  // [StreamLinkGuiActions.SET_PLUGINS]: (ctx) => {
-  //   try {
-  //     // const data = require('@/assets/plugins')
-  //     // ctx.commit(StreamLinkGuiMutations.SET_PLUGINS, data)
-  //   } catch (e) {
-  //     // @TODO: solve pb
-  //     ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: 'No plugins.json file.', type: 'error' })
-  //   }
-  // },
+  [StreamLinkGuiActions.SET_PLUGINS]: (ctx) => {
+    try {
+      const data = require('@/assets/plugins.json')
+      ctx.commit(StreamLinkGuiMutations.SET_PLUGINS, data)
+    } catch (e) {
+      // @TODO: solve pb
+      ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: 'No plugins.json file.', type: 'error' })
+    }
+  },
   [StreamLinkGuiActions.PLAY_STREAM]: (ctx, stream) => {
     ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: `Starting ${stream.url}`, type: 'info'})
     startStream(`streamlink.exe ${stream.url} ${stream.quality}`, ctx)

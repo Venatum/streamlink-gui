@@ -34,37 +34,8 @@ export function startStream (command, ctx) {
 }
 
 export function onLive (command) {
-  // let cmd = childProcess.spawn(command, {
-  //   shell: true
-  // })
-  //
-  // cmd.stdout.on('data', (data) => {
-  //   data = data.toString('utf8')
-  //   console.log('stdout', data)
-  //   return (!data.includes('No playable streams found on this URL'))
-  // })
-  // cmd.stderr.on('data', (data) => {
-  //   console.log('stderr', data.toString('utf8'))
-  //   return false
-  // })
-  // cmd.on('close', (code) => {
-  //   console.log(`child process exited with code ${code}`)
-  // })
-  // childProcess.exec(command, function (error, stdout, stderr) {
-  //   console.log(stdout)
-  //   if (stdout) {
-  //     if (stdout.includes('Available streams')) {
-  //       return true
-  //     } else if (stdout.includes('No playable streams found on this URL')) {
-  //       return false
-  //     }
-  //   }
-  //   if (stderr || error) {
-  //     return false
-  //   }
-  // })
   let stdout = childProcess.execSync(command).toString('utf8')
-  console.log(stdout)
+
   if (stdout) {
     if (stdout.includes('Available streams')) {
       return true

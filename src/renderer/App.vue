@@ -31,7 +31,7 @@
         </v-btn>
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon>
+        <v-btn icon @click="addStream = !addStream">
           <v-icon>add</v-icon>
         </v-btn>
         <v-btn icon>
@@ -43,14 +43,10 @@
           <v-slide-y-transition mode="out-in">
             <router-view></router-view>
           </v-slide-y-transition>
+          <add-stream v-if="addStream" :add-stream="addStream" v-on:setAddStream="setAddStream"></add-stream>
         </v-container>
       </v-content>
       <v-navigation-drawer temporary fixed app ></v-navigation-drawer>
-      <!--<v-footer app>-->
-        <!--<v-spacer></v-spacer>-->
-        <!--<span>&copy; Vincent LE QUEC 2018</span>-->
-        <!--<v-spacer></v-spacer>-->
-      <!--</v-footer>-->
     </v-app>
   </div>
 </template>
@@ -58,9 +54,11 @@
 <script>
   // import {StreamLinkGuiMutations} from './store/mutations'
   import {StreamLinkGuiActions} from './store/actions'
+  import AddStream from './components/StreamView/AddStream'
 
   export default {
     name: 'streamlink-gui',
+    components: {AddStream},
     data: () => ({
       drawer: true,
       items: [
@@ -69,8 +67,14 @@
         { icon: 'fab fa-vuejs', title: 'Electron-vue + Vuetify', to: '/vue' }
       ],
       miniVariant: false,
-      title: 'Streamlink GUI'
+      title: 'Streamlink GUI',
+      addStream: false
     }),
+    methods: {
+      setAddStream (val) {
+        this.addStream = val
+      }
+    },
     mounted () {
       this.$store.dispatch(StreamLinkGuiActions.SET_STREAMS)
       //  @TODO: in background
