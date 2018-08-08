@@ -25,6 +25,22 @@
                                     v-model="streamPlugin">
                             </v-text-field>
                         </v-flex>
+                        <v-flex xs6>
+                            <v-switch
+                                    label="Favourite"
+                                    color="yellow"
+                                    prepend-icon="star"
+                                    v-model="streamFavourite"
+                            ></v-switch>
+                        </v-flex>
+                        <v-flex xs6>
+                            <v-switch
+                                    label="Sensitive content"
+                                    color="red"
+                                    prepend-icon="fas fa-user-lock"
+                                    v-model="streamSensitive"
+                            ></v-switch>
+                        </v-flex>
                     </v-layout>
                 </v-container>
                 <small>* indicates required field</small>
@@ -38,6 +54,22 @@
                 <v-btn color="green darken-1" @click.native="onAdd = false" @click="onSave">Save</v-btn>
             </v-card-actions>
         </v-card>
+        <v-dialog
+                v-model="loading"
+                hide-overlay
+                persistent
+                width="300">
+            <v-card color="primary" dark>
+                <v-card-text>
+                    Please stand by
+                    <v-progress-linear
+                            indeterminate
+                            color="white"
+                            class="mb-0"
+                    ></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </v-dialog>
 </template>
 
@@ -49,9 +81,12 @@
         return {
           onAdd: this.addStream,
           valid: true,
+          loading: false,
           streamUrl: '',
           streamName: '',
           streamPlugin: '',
+          streamFavourite: false,
+          streamSensitive: false,
           streamAlert: {
             active: false,
             msg: '',
