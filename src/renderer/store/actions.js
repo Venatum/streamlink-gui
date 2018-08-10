@@ -9,6 +9,7 @@ export const Files = {
 export const StreamLinkGuiActions = {
   PLAY_STREAM: 'playStream',
   SET_STREAMS: 'setStreams',
+  SET_CONFIG: 'setConfig',
   SET_PLUGINS: 'setPlugins',
   ON_LIVE: 'onLive',
   RESET_STORE: 'resetStore'
@@ -23,6 +24,14 @@ const actions = {
     } catch (e) {
       // @TODO: solve pb
       ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: 'No streams.json file.', type: 'error' })
+    }
+  },
+  [StreamLinkGuiActions.SET_CONFIG]: (ctx) => {
+    try {
+      let data = Files.CONFIG.getData()
+      ctx.commit(StreamLinkGuiMutations.SET_CONFIG, data)
+    } catch (e) {
+      Files.CONFIG.setData(this.state.config)
     }
   },
   [StreamLinkGuiActions.SET_PLUGINS]: (ctx) => {

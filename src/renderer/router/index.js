@@ -13,7 +13,7 @@ export default new Router({
     {
       path: '/sensitive_content',
       name: 'Sensitive content',
-      component: require('@/components/InspireView').default
+      component: require('@/components/SensitiveView').default
     },
     {
       path: '/vue',

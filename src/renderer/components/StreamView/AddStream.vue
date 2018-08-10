@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="onAdd" persistent max-width="75%">
         <v-card>
-            <v-card-title>
+            <v-card-title class="grey">
                 <span class="headline">Add Stream</span>
             </v-card-title>
             <v-card-text>
@@ -12,17 +12,17 @@
                                     label="Stream URL" required autofocus clearable
                                     hint="Example: twitch.tv/[streamer]"
                                     prepend-icon="fas fa-link"
-                                    v-model="streamUrl">
+                                    v-model="stream.url">
                             </v-text-field>
                             <v-text-field
                                     label="Stream Name" required
                                     prepend-icon="fas fa-user-circle"
-                                    v-model="streamName">
+                                    v-model="stream.name">
                             </v-text-field>
-                            <v-text-field disabled required
+                            <v-text-field disabled
                                     label="Plugin"
                                     prepend-icon="fas fa-info-circle"
-                                    v-model="streamPlugin">
+                                    v-model="stream.plugin.name">
                             </v-text-field>
                         </v-flex>
                         <v-flex xs6>
@@ -30,7 +30,7 @@
                                     label="Favourite"
                                     color="yellow"
                                     prepend-icon="star"
-                                    v-model="streamFavourite"
+                                    v-model="stream.favourite"
                             ></v-switch>
                         </v-flex>
                         <v-flex xs6>
@@ -38,13 +38,33 @@
                                     label="Sensitive content"
                                     color="red"
                                     prepend-icon="fas fa-user-lock"
-                                    v-model="streamSensitive"
+                                    v-model="stream.sensitive"
                             ></v-switch>
+                        </v-flex>
+                        <v-flex v-if="stream.plugin.auth" xs12>
+                            <hr/>
+                            <h2 class="grey" style="text-align: center">Login and/or Key</h2>
+                            <hr/>
+                            <v-text-field clearable
+                                    label="Login"
+                                    prepend-icon="far fa-user"
+                                    v-model="stream.plugin.login">
+                            </v-text-field>
+                            <v-text-field clearable
+                                    label="Password"
+                                    prepend-icon="fas fa-unlock"
+                                    v-model="stream.plugin.password">
+                            </v-text-field>
+                            <v-text-field clearable
+                                    label="Key / Token"
+                                    prepend-icon="fas fa-key"
+                                    v-model="stream.plugin.key">
+                            </v-text-field>
                         </v-flex>
                     </v-layout>
                 </v-container>
                 <small>* indicates required field</small>
-                 <v-alert v-if="streamAlert.active" :value="streamAlert.active" :type="streamAlert.type" style="text-align: center">
+                 <v-alert outline v-if="streamAlert.active" :value="streamAlert.active" :type="streamAlert.type" style="text-align: center">
                     {{ this.streamAlert.msg }}
                 </v-alert>
             </v-card-text>
@@ -74,19 +94,32 @@
 </template>
 
 <script>
+    import {StreamLinkGuiMutations} from '@/store/mutations'
+
     export default {
       name: 'AddStream',
       props: ['addStream'],
       data: function () {
         return {
           onAdd: this.addStream,
-          valid: true,
           loading: false,
-          streamUrl: '',
-          streamName: '',
-          streamPlugin: '',
-          streamFavourite: false,
-          streamSensitive: false,
+          stream: {
+            id: 0,
+            name: '',
+            plugin: {
+              name: '',
+              auth: false,
+              login: '',
+              password: '',
+              key: ''
+            },
+            url: '',
+            quality: 'best',
+            icon: '',
+            favourite: false,
+            live: false,
+            sensitive: false
+          },
           streamAlert: {
             active: false,
             msg: '',
@@ -95,26 +128,46 @@
         }
       },
       watch: {
-        streamUrl: function (val) {
-          let tmp = val.split('/')
-          this.streamPlugin = tmp[0]
-          this.streamName = tmp[1]
+        'stream.url': function (val) {
+          if (val) {
+            let tmp = val.split('/')
+            this.stream.plugin.name = tmp[0]
+            this.stream.name = tmp[1]
+            this.checkPlugin()
+          } else {
+            this.stream.plugin.name = ''
+            this.stream.name = ''
+            this.resetStreamAlert()
+          }
         }
       },
       methods: {
+        checkPlugin () {
+          for (let plugin in this.$store.state.plugins) {
+            if (this.$store.state.plugins[plugin].urls.includes(this.stream.plugin.name)) {
+              this.stream.plugin.name = this.$store.state.plugins[plugin].name
+              if ('notes' in this.$store.state.plugins[plugin]) {
+                this.streamAlert.active = true
+                this.streamAlert.msg = this.$store.state.plugins[plugin].notes
+                this.streamAlert.type = 'warning'
+              }
+              break
+            }
+          }
+        },
+        resetStreamAlert () {
+          this.streamAlert.active = false
+          this.streamAlert.msg = ''
+          this.streamAlert.type = ''
+        },
         onSave () {
           console.log('@Todo: check url before save')
-          console.log('@Todo: add favourite btn')
-          console.log('@Todo: check 18+')
-          // let tmp = this.url.split('/')
-          // this.stream.name = tmp[1]
-          // this.stream.plugin = tmp[0]
-          // this.stream.url = this.url
-          // this.$emit('updateStream', this.stream)
+          this.$store.commit(StreamLinkGuiMutations.ADD_STREAM, this.stream)
           this.onCancel()
         },
         onCancel () {
           this.onAdd = false
+          this.resetStreamAlert()
           this.$emit('setAddStream', false)
         }
       }

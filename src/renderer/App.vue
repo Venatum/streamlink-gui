@@ -76,7 +76,9 @@
       }
     },
     mounted () {
+      this.$store.dispatch(StreamLinkGuiActions.SET_CONFIG)
       this.$store.dispatch(StreamLinkGuiActions.SET_STREAMS)
+      this.$store.dispatch(StreamLinkGuiActions.SET_PLUGINS)
       //  @TODO: in background
       // this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams)
     }

@@ -3,11 +3,14 @@
 - [x] Plugins.json
 - [ ] Update 
 - [ ] Update notification
-- [ ] Add stream component
+- [x] Add stream component
+- [x] Add stream backend
+- [ ] Add stream check if live exist
+- [ ] Add stream auth (+ .json)
 - [ ] Update stream
-- [ ] Config.json
+- [x] Config.json
 - [ ] Config component
-- [ ] Add sensitive content
+- [x] Add sensitive content
 - [ ] Add +18 check
 - [ ] Check if streamlink exist
 - [ ] Multi languages (i18n)

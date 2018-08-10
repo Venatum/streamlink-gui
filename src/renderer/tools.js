@@ -5,6 +5,9 @@ const electron = require('electron')
 const path = require('path')
 const fs = require('fs')
 
+/**
+ * startStream
+ */
 export function startStream (command, ctx) {
   let cmd = childProcess.spawn(command, {
     shell: true
@@ -33,6 +36,9 @@ export function startStream (command, ctx) {
   // })
 }
 
+/**
+ * onLive
+ */
 export function onLive (command) {
   let stdout = childProcess.execSync(command).toString('utf8')
 
@@ -70,7 +76,7 @@ export class Storage {
   }
   set (key, val) {
     this.data[key] = val
-    fs.writeFile(this.path, JSON.stringify(this.data))
+    fs.writeFileSync(this.path, JSON.stringify(this.data))
   }
 
   getData () {
