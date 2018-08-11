@@ -48,7 +48,7 @@
             </v-card-actions>
         </v-card>
         <!-- Add/Update stream -->
-        <edit-stream v-if="editStream" :editStream="editStream" :stream="stream" v-on:setEditStream="setEditStream" v-on:updateStream="updateStream"></edit-stream>
+        <edit-stream v-if="editStream" :editStream="editStream" :data="stream" v-on:setEditStream="setEditStream"></edit-stream>
     </div>
 </template>
 
