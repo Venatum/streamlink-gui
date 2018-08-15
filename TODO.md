@@ -7,6 +7,7 @@
 - [?] Update notification
 - [x] Add stream component
 - [x] Add stream backend
+- [ ] Increment ID !!!
 - [ ] Add stream / EditStream: parsing url (plugin)
 - [ ] Add stream / EditStream: check if live exist
 - [x] Add stream auth (+ .json)

@@ -1,25 +1,31 @@
 # streamlink-gui
 [![Build Status](https://travis-ci.org/Venatum/streamlink-gui.svg?branch=master)](https://travis-ci.org/Venatum/streamlink-gui)
 
-> A GUI to use [streamlink](https://github.com/streamlink/streamlink)
+> A simple GUI to use [streamlink](https://github.com/streamlink/streamlink)
 
-#### Build Setup
+## Getting Started
 
-``` bash
-# install dependencies
-npm install
+### Prerequisites
 
-# serve with hot reload at localhost:9080
-npm run dev
+First, you need to install [streamlink](https://github.com/streamlink/streamlink/blob/master/README.md#installation)
 
-# build electron application for production
-npm run build
+### Installing
 
+@TODO
 
-# lint all JS/Vue component files in `src/`
-npm run lint
+## Versioning
 
-```
+For the versions available, see the [tags on this repository](https://github.com/Venatum/streamlink-gui/tags). 
+
+## Authors
+
+* **Vincent Le Quec** - [Venatum](https://github.com/Venatum)
+
+See also the list of [contributors](https://github.com/Venatum/streamlink-gui/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the BSD 2-Clause "Simplified" License - see the [LICENSE](LICENSE) file for details
 
 ---
 
