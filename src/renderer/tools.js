@@ -78,7 +78,6 @@ export class Storage {
     const userDataPath = (electron.app || electron.remote.app).getPath('userData')
 
     this.path = path.join(userDataPath, fileName)
-    console.log(this.path)
     fs.access(this.path, fs.constants.R_OK | fs.constants.W_OK, (err) => {
       if (err) {
         this.setData([])
