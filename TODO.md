@@ -1,6 +1,7 @@
 ### TODO
 
 - [x] Plugins.json
+- [x] Travis Build
 - [?] Update<br>
     https://github.com/electron/update.electronjs.org<br>
     https://github.com/iffy/electron-updater-example<br>
