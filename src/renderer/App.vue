@@ -68,7 +68,8 @@
       ],
       miniVariant: false,
       title: 'Streamlink GUI',
-      addStream: false
+      addStream: false,
+      liveInterval: null
     }),
     methods: {
       setAddStream (val) {
@@ -79,8 +80,10 @@
       this.$store.dispatch(StreamLinkGuiActions.SET_CONFIG)
       this.$store.dispatch(StreamLinkGuiActions.SET_STREAMS)
       this.$store.dispatch(StreamLinkGuiActions.SET_PLUGINS)
-      //  @TODO: in background
-      // this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams)
+      this.liveInterval = setInterval(this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams), 10 * 60 * 1000)
+    },
+    destroyed () {
+      clearInterval(this.liveInterval)
     }
   }
 </script>

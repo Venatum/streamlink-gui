@@ -52,6 +52,7 @@
                             </v-text-field>
                             <v-text-field clearable
                                     label="Password"
+                                    type="password"
                                     prepend-icon="fas fa-unlock"
                                     v-model="stream.plugin.password">
                             </v-text-field>
@@ -150,6 +151,10 @@
                 this.streamAlert.active = true
                 this.streamAlert.msg = this.$store.state.plugins[plugin].notes
                 this.streamAlert.type = 'warning'
+              }
+              if ('auth' in this.$store.state.plugins[plugin]) {
+                this.stream.plugin.auth = this.$store.state.plugins[plugin].auth
+                // @TODO: set auth
               }
               break
             }

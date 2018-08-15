@@ -22,8 +22,7 @@ const actions = {
       let data = Files.STREAMS.getData()
       ctx.commit(StreamLinkGuiMutations.SET_STREAMS, data)
     } catch (e) {
-      // @TODO: solve pb
-      ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: 'No streams.json file.', type: 'error' })
+      Files.STREAMS.setData({})
     }
   },
   [StreamLinkGuiActions.SET_CONFIG]: (ctx) => {
@@ -47,10 +46,9 @@ const actions = {
     ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: `Starting ${stream.url}`, type: 'info'})
     startStream(`streamlink.exe ${stream.url} ${stream.quality}`, ctx)
   },
-  [StreamLinkGuiActions.ON_LIVE]: (ctx, streams) => {
+  [StreamLinkGuiActions.ON_LIVE]: async (ctx, streams) => {
     for (let stream in streams) {
-      // @TODO
-      if (onLive(`streamlink.exe ${streams[stream].url}`)) {
+      if (await onLive(`streamlink.exe ${streams[stream].url}`)) {
         ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: true})
       } else {
         ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: false})

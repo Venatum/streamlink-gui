@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "author": "Venatum <vincentlequec@gmail.com>",
   "description": "A GUI to use streamlink",
-  "license": null,
+  "license": "BSD 2-Clause License",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "electron-updater": "^3.1.1",
     "vue": "^2.4.2",
     "vue-electron": "^1.0.6",
     "vue-router": "^2.5.3",

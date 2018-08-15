@@ -39,15 +39,32 @@ export function startStream (command, ctx) {
 /**
  * onLive
  */
-export function onLive (command) {
-  let stdout = childProcess.execSync(command).toString('utf8')
 
-  if (stdout) {
-    if (stdout.includes('Available streams')) {
-      return true
-    } else if (stdout.includes('No playable streams found on this URL')) {
-      return false
+function execCmdLive (command) {
+  return new Promise((resolve, reject) => {
+    childProcess.exec(command, (error, stdout) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(stdout)
+      }
+    })
+  })
+}
+
+export async function onLive (command) {
+  try {
+    let stdout = await execCmdLive(command)
+
+    if (stdout) {
+      if (stdout.includes('Available streams')) {
+        return true
+      } else if (stdout.includes('No playable streams found on this URL')) {
+        return false
+      }
     }
+  } catch (e) {
+    return false
   }
 }
 

@@ -1,13 +1,13 @@
 [
   { "name": "abematv"                 ,"urls": ["abema.tv"]             ,"live":true   ,"vod": true    ,"notes": "Streams are geo-restricted to Japan." },
-  { "name": "abweb"                   ,"urls": ["abweb.com"]            ,"live":true   ,"vod": false   ,"notes": "Requires a login and a subscription." },
+  { "name": "abweb"                   ,"urls": ["abweb.com"]            ,"live":true   ,"vod": false   ,"notes": "Requires a login and a subscription.", "auth": true },
   { "name": "adultswim"               ,"urls": ["adultswim.com"]        ,"live":true   ,"vod": true    ,"notes": "Streams may be geo-restricted, some VOD streams are protected by DRM." },
   { "name": "afreeca"                 ,"urls": ["afreecatv.com", "afreeca.tv"]
                                                                         ,"live":true   ,"vod": false  },
   { "name": "aftonbladet"             ,"urls": ["aftonbladet.se"]       ,"live":true   ,"vod": true   },
   { "name": "aliez"                   ,"urls": ["aliez.tv"]             ,"live":true   ,"vod": true   },
   { "name": "aljazeeraen"             ,"urls": ["aljazeera.com"]        ,"live":true   ,"vod": true    ,"notes": "English version of the site." },
-  { "name": "animelab"                ,"urls": ["animelab.com"]         ,"live":false  ,"vod": true    ,"notes": "Requires a login. Streams may be geo-restricted to Australia and New Zealand." },
+  { "name": "animelab"                ,"urls": ["animelab.com"]         ,"live":false  ,"vod": true    ,"notes": "Requires a login. Streams may be geo-restricted to Australia and New Zealand.", "auth": true },
   { "name": "antenna"                 ,"urls": ["antenna.gr"]           ,"live":false  ,"vod": true   },
   { "name": "app17"                   ,"urls": ["17app.co"]             ,"live":true   ,"vod": false  },
   { "name": "arconai"                 ,"urls": ["arconai.tv"]           ,"live":true   ,"vod": true    ,"notes": "Only SD quality streams" },
@@ -28,8 +28,8 @@
   { "name": "brightcove"              ,"urls": ["players.brightcove.net"]
                                                                         ,"live":true   ,"vod": true   },
   { "name": "brittv"                  ,"urls": ["brittv.co.uk"]         ,"live":true   ,"vod": false  },
-  { "name": "btsports"                ,"urls": ["sport.bt.com"]         ,"live":true   ,"vod": true    ,"notes": "Requires subscription account" },
-  { "name": "btv"                     ,"urls": ["btv.bg"]               ,"live":true   ,"vod": false   ,"notes": "Requires login, and geo-restricted to Bulgaria." },
+  { "name": "btsports"                ,"urls": ["sport.bt.com"]         ,"live":true   ,"vod": true    ,"notes": "Requires subscription account", "auth": true },
+  { "name": "btv"                     ,"urls": ["btv.bg"]               ,"live":true   ,"vod": false   ,"notes": "Requires login, and geo-restricted to Bulgaria.", "auth": true },
   { "name": "cam4"                    ,"urls": ["cam4.com"]             ,"live":true   ,"vod": false  },
   { "name": "camsoda"                 ,"urls": ["camsoda.com"]          ,"live":true   ,"vod": false  },
   { "name": "canalplus"               ,"urls": ["mycanal.fr"]           ,"live":false  ,"vod": true    ,"notes": "Streams may be geo-restricted to France." },
@@ -55,7 +55,7 @@
   { "name": "douyutv"                 ,"urls": ["douyu.com", "v.douyu.com"]
                                                                         ,"live": true   ,"vod": true  },
   { "name": "dplay"                   ,"urls": ["dplay.se", "dplay.no", "dplay.dk"]
-                                                                        ,"live": false  ,"vod": true   ,"notes": "Streams may be geo-restricted. Only non-premium streams currently supported." },
+                                                                        ,"live": false  ,"vod": true   ,"notes": "Streams may be geo-restricted. Only non-premium streams currently supported.", "auth": true },
   { "name": "drdk"                    ,"urls": ["dr.dk"]                ,"live": true   ,"vod": true   ,"notes": "Streams may be geo-restricted to Denmark." },
   { "name": "earthcam"                ,"urls": ["earthcam.com"]         ,"live": true   ,"vod": true   ,"notes": "Only works for the cams hosted on EarthCam." },
   { "name": "ellobo"                  ,"urls": ["ellobo106.com"]        ,"live": true   ,"vod": false },
@@ -88,7 +88,7 @@
   { "name": "kingkong"                ,"urls": ["kingkong.com.tw"]      ,"live": true   ,"vod": false },
   { "name": "live_russia_tv"          ,"urls": ["live.russia.tv"]       ,"live": true   ,"vod": false },
   { "name": "liveedu"                 ,"urls": ["liveedu.tv", "livecoding.tv"]
-                                                                        ,"live": true   ,"vod": false  ,"notes": "Some streams require a login." },
+                                                                        ,"live": true   ,"vod": false  ,"notes": "Some streams require a login.", "auth": true },
   { "name": "liveme"                  ,"urls": ["liveme.com"]           ,"live": true   ,"vod": false },
   { "name": "livestream"              ,"urls": ["new.livestream.com"]   ,"live": true   ,"vod": false },
   { "name": "lrt"                     ,"urls": ["lrt.lt"]               ,"live": true   ,"vod": false },
@@ -138,7 +138,7 @@
   { "name": "rtve"                    ,"urls": ["rtve.es"]              ,"live": true   ,"vod": false },
   { "name": "rtvs"                    ,"urls": ["rtvs.sk"]              ,"live": true   ,"vod": false  ,"notes": "Streams may be geo-restricted to Slovakia." },
   { "name": "ruv"                     ,"urls": ["ruv.is"]               ,"live": true   ,"vod": true   ,"notes": "Streams may be geo-restricted to Iceland." },
-  { "name": "schoolism"               ,"urls": ["schoolism.com"]        ,"live": false  ,"vod": true   ,"notes": "Requires a login and a subscription." },
+  { "name": "schoolism"               ,"urls": ["schoolism.com"]        ,"live": false  ,"vod": true   ,"notes": "Requires a login and a subscription.", "auth": true },
   { "name": "seetv"                   ,"urls": ["seetv.tv"]             ,"live": true   ,"vod": false  ,"notes": "Streams that are embedded from other sites will not work." },
   { "name": "showroom"                ,"urls": ["showroom-live.com"]    ,"live": true   ,"vod": false  ,"notes": "Only RTMP streams are available." },
   { "name": "skai"                    ,"urls": ["skai.gr"]              ,"live": true   ,"vod": false  ,"notes": "Only embedded youtube live streams are supported" },
@@ -149,7 +149,7 @@
                                                                         ,"live": true   ,"vod": false  ,"notes": "Streams are geo-restricted to Switzerland." },
   { "name": "ssh101"                  ,"urls": ["ssh101.com"]           ,"live": true   ,"vod": false },
   { "name": "startv"                  ,"urls": ["startv.com.tr"]        ,"live": true   ,"vod": false },
-  { "name": "steam"                   ,"urls": ["steamcommunity.com"]   ,"live": true   ,"vod": false  ,"notes": "Some streams will require a Steam account." },
+  { "name": "steam"                   ,"urls": ["steamcommunity.com"]   ,"live": true   ,"vod": false  ,"notes": "Some streams will require a Steam account.", "auth": true },
   { "name": "streamable"              ,"urls": ["streamable.com"]       ,"live": false  ,"vod": true  },
   { "name": "streamboat"              ,"urls": ["streamboat.tv"]        ,"live": true   ,"vod": false },
   { "name": "streamingvideoprovider"  ,"urls": ["streamingvideoprovider.co.uk"]
@@ -190,9 +190,9 @@
   { "name": "tvrby"                   ,"urls": ["tvr.by"]               ,"live": true   ,"vod": false  ,"notes": "Streams may be geo-restricted to Belarus." },
   { "name": "tvrplus"                 ,"urls": ["tvrplus.ro"]           ,"live": true   ,"vod": false  ,"notes": "Streams may be geo-restricted to Romania." },
   { "name": "tvtoya"                  ,"urls": ["tvtoya.pl"]            ,"live": true   ,"vod": false },
-  { "name": "twitch"                  ,"urls": ["twitch.tv"]            ,"live": true   ,"vod": true   ,"notes": "Possible to authenticate for access to subscription streams." },
+  { "name": "twitch"                  ,"urls": ["twitch.tv"]            ,"live": true   ,"vod": true   ,"notes": "Possible to authenticate for access to subscription streams.", "auth": true },
   { "name": "ustreamtv"               ,"urls": ["ustream.tv"]           ,"live": true   ,"vod": true  },
-  { "name": "ustvnow"                 ,"urls": ["ustvnow.com"]          ,"live": true   ,"vod": false  ,"notes": "All streams require an account, some streams require a subscription." },
+  { "name": "ustvnow"                 ,"urls": ["ustvnow.com"]          ,"live": true   ,"vod": false  ,"notes": "All streams require an account, some streams require a subscription.", "auth": true },
   { "name": "vaughnlive"              ,"urls": ["vaughnlive.tv", "breakers.tv", "instagib.tv", "vapers.tv"]
                                                                         ,"live": true   ,"vod": false },
   { "name": "vgtv"                    ,"urls": ["vgtv.no"]              ,"live": true   ,"vod": true  },
@@ -206,11 +206,11 @@
   { "name": "webtv"                   ,"urls": ["web.tv"]               ,"live": true   ,"vod": false },
   { "name": "weeb"                    ,"urls": ["weeb.tv"]              ,"live": true   ,"vod": false  ,"notes": "Requires rtmpdump with K-S-V patches." },
   { "name": "welt"                    ,"urls": ["welt.de"]              ,"live": true   ,"vod": true   ,"notes": "Streams may be geo-restricted to Germany." },
-  { "name": "wwenetwork"              ,"urls": ["network.wwe.com"]      ,"live": true   ,"vod": true   ,"notes": "Requires an account to access any content." },
+  { "name": "wwenetwork"              ,"urls": ["network.wwe.com"]      ,"live": true   ,"vod": true   ,"notes": "Requires an account to access any content.", "auth": true },
   { "name": "younow"                  ,"urls": ["younow.com"]           ,"live": true   ,"vod": false },
   { "name": "youtube"                 ,"urls": ["youtube.com", "youtu.be"]
                                                                         ,"live": true   ,"vod": true   ,"notes": "Protected videos are not supported." },
-  { "name": "yupptv"                  ,"urls": ["yupptv.com"]           ,"live": true   ,"vod": true   ,"notes": "Some streams require an account and subscription." },
+  { "name": "yupptv"                  ,"urls": ["yupptv.com"]           ,"live": true   ,"vod": true   ,"notes": "Some streams require an account and subscription.", "auth": true },
   { "name": "zattoo"                  ,"urls": ["zattoo.com", "nettv.netcologne.de", "tvonline.ewe.de", "iptv.glattvision.ch", "mobiltv.quickline.com", "player.waly.tv", "tvplus.m-net.de", "www.bbv-tv.net", "www.meinewelt.cc", "www.myvisiontv.ch", "www.netplus.tv", "www.quantum-tv.com", "www.saktv.ch", "www.vtxtv.ch" ]
                                                                         ,"live": true   ,"vod": true  },
   { "name": "zdf_mediathek"           ,"urls": ["zdf.de"]               ,"live": true   ,"vod": true   ,"notes": "Streams may be geo-restricted to Germany." },

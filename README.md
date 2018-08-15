@@ -1,6 +1,7 @@
 # streamlink-gui
+[![Build Status](https://travis-ci.org/Venatum/streamlink-gui.svg?branch=master)](https://travis-ci.org/Venatum/streamlink-gui)
 
-> A GUI to use streamlink
+> A GUI to use [streamlink](https://github.com/streamlink/streamlink)
 
 #### Build Setup
 
