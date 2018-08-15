@@ -55,7 +55,7 @@ const mutations = {
     }
   },
   [StreamLinkGuiMutations.SET_CONFIG]: (state, config) => {
-    if (!(config || config === [] || config === {})) {
+    if (config && config !== [] && config !== {}) {
       state.config = config
     }
     Files.CONFIG.setData(state.config)
