@@ -8,7 +8,7 @@
         app
       >
         <v-list>
-          <v-list-tile 
+          <v-list-tile
             router
             :to="item.to"
             :key="i"
@@ -80,6 +80,7 @@
       this.$store.dispatch(StreamLinkGuiActions.SET_CONFIG)
       this.$store.dispatch(StreamLinkGuiActions.SET_STREAMS)
       this.$store.dispatch(StreamLinkGuiActions.SET_PLUGINS)
+      this.$store.dispatch(StreamLinkGuiActions.RESET_LIVE, this.$store.state.streams)
       this.liveInterval = setInterval(this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams), 10 * 60 * 1000)
     },
     destroyed () {
