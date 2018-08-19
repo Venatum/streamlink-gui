@@ -6,7 +6,7 @@ export const Files = {
     id: 0,
     language: 'english'
   }),
-  STREAMS: new Storage('streams.json', {})
+  STREAMS: new Storage('streams.json', [])
 }
 
 export const StreamLinkGuiActions = {

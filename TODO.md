@@ -22,4 +22,5 @@
 - [ ] Multi languages (i18n) - https://vuetifyjs.com/en/framework/internationalization
 - [x] check onLive every n min
 - [x] Is on live in background
+- [ ] Play component (VOD or stream not registered)
 - [ ] ...

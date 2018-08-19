@@ -44,15 +44,24 @@
             <router-view></router-view>
           </v-slide-y-transition>
           <add-stream v-if="addStream" :add-stream="addStream" v-on:setAddStream="setAddStream"></add-stream>
+
+          <v-fab-transition>
+            <v-btn dark fab fixed bottom right
+                   v-show="activeFab"
+                   color="primary"
+                   @click="addStream = !addStream">
+              <v-icon style="margin: 15px 10px -15px 10px">add</v-icon>
+            </v-btn>
+          </v-fab-transition>
+
         </v-container>
       </v-content>
-      <v-navigation-drawer temporary fixed app ></v-navigation-drawer>
+      <v-navigation-drawer temporary fixed app></v-navigation-drawer>
     </v-app>
   </div>
 </template>
 
 <script>
-  // import {StreamLinkGuiMutations} from './store/mutations'
   import {StreamLinkGuiActions} from './store/actions'
   import AddStream from './components/StreamView/AddStream'
 
@@ -82,6 +91,16 @@
       this.$store.dispatch(StreamLinkGuiActions.SET_PLUGINS)
       this.$store.dispatch(StreamLinkGuiActions.RESET_LIVE, this.$store.state.streams)
       this.liveInterval = setInterval(this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams), 10 * 60 * 1000)
+    },
+    computed: {
+      activeFab () {
+        switch (this.$route.name) {
+          case 'Streams':
+          case 'Sensitive content':
+            return true
+          default: return false
+        }
+      }
     },
     destroyed () {
       clearInterval(this.liveInterval)
