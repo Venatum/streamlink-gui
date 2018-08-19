@@ -72,7 +72,7 @@
       },
       computed: {
         getIcon () {
-          return (this.stream.icon) ? require(this.stream.icon) : require('@/assets/Icons/noImage.svg')
+          return (this.stream.icon) ? this.stream.icon : 'static/Icons/noImage.svg'
         }
       },
       methods: {

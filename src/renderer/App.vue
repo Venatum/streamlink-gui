@@ -43,6 +43,7 @@
           <v-slide-y-transition mode="out-in">
             <router-view></router-view>
           </v-slide-y-transition>
+
           <add-stream v-if="addStream" :add-stream="addStream" v-on:setAddStream="setAddStream"></add-stream>
 
           <v-fab-transition>
@@ -50,7 +51,7 @@
                    v-show="activeFab"
                    color="primary"
                    @click="addStream = !addStream">
-              <v-icon style="margin: 15px 10px -15px 10px">add</v-icon>
+              <v-icon>add</v-icon>
             </v-btn>
           </v-fab-transition>
 
