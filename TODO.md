@@ -8,7 +8,7 @@
 - [x] Add stream component
 - [x] Add stream backend
 - [x] Increment ID !!!
-- [ ] Add stream / EditStream: parsing url (plugin)
+- [x] Add stream / EditStream: parsing url (plugin)
 - [ ] Add stream / EditStream: check if live exist
 - [x] Add stream auth (+ .json)
 - [ ] Add auth (+ .json)
@@ -23,4 +23,5 @@
 - [x] check onLive every n min
 - [x] Is on live in background
 - [ ] Play component (VOD or stream not registered)
+- [ ] Add image for each stream
 - [ ] ...

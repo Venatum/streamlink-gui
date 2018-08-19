@@ -96,6 +96,7 @@
 
 <script>
     import {StreamLinkGuiMutations} from '@/store/mutations'
+    import {extractRootDomain} from '../../tools'
 
     export default {
       name: 'AddStream',
@@ -131,10 +132,12 @@
       watch: {
         'stream.url': function (val) {
           if (val) {
-            let tmp = val.split('/')
-            this.stream.plugin.name = tmp[0]
-            this.stream.name = tmp[1]
+            this.stream.plugin.name = extractRootDomain(val)
+            this.stream.name = val.split('/').pop()
             this.checkPlugin()
+            if (this.stream.plugin.name === '') {
+              this.resetStreamAlert()
+            }
           } else {
             this.stream.plugin.name = ''
             this.stream.name = ''
