@@ -37,6 +37,20 @@ export function extractRootDomain (url) {
   return domain
 }
 
+export function checkURL (url) {
+  childProcess.exec(`streamlink.exe ${url}`, (error, stdout) => {
+    if (error) {
+      console.error(`exec error: ${error}`)
+      return false
+    }
+    if (stdout) {
+      stdout = stdout.toString('utf8')
+      console.log(stdout)
+      return !stdout.includes('Unable to find channel')
+    }
+  })
+}
+
 /**
  * startStream
  */
@@ -71,7 +85,6 @@ export function startStream (command, ctx) {
 /**
  * onLive
  */
-
 function execCmdLive (command) {
   return new Promise((resolve, reject) => {
     childProcess.exec(command, (error, stdout) => {

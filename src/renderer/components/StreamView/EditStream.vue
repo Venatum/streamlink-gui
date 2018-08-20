@@ -71,8 +71,8 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="red darken-1" @click.native="onEdit = false" @click="onCancel">Cancel</v-btn>
-                <v-btn color="green darken-1" @click.native="onEdit = false" @click="onSave">Save</v-btn>
+                <v-btn color="red darken-1" @click="onCancel">Cancel</v-btn>
+                <v-btn color="green darken-1" @click="onSave">Save</v-btn>
             </v-card-actions>
         </v-card>
         <v-dialog
@@ -96,6 +96,7 @@
 
 <script>
     import {StreamLinkGuiMutations} from '@/store/mutations'
+    import {checkURL, extractRootDomain} from '../../tools'
 
     export default {
       name: 'AddStream',
@@ -131,10 +132,12 @@
       watch: {
         'stream.url': function (val) {
           if (val) {
-            let tmp = val.split('/')
-            this.stream.plugin.name = tmp[0]
-            this.stream.name = tmp[1]
+            this.stream.plugin.name = extractRootDomain(val)
+            this.stream.name = val.split('/').pop()
             this.checkPlugin()
+            if (this.stream.plugin.name === '') {
+              this.resetStreamAlert()
+            }
           } else {
             this.stream.plugin.name = ''
             this.stream.name = ''
@@ -148,9 +151,7 @@
             if (this.$store.state.plugins[plugin].urls.includes(this.stream.plugin.name)) {
               this.stream.plugin.name = this.$store.state.plugins[plugin].name
               if ('notes' in this.$store.state.plugins[plugin]) {
-                this.streamAlert.active = true
-                this.streamAlert.msg = this.$store.state.plugins[plugin].notes
-                this.streamAlert.type = 'warning'
+                this.setStreamAlert(true, this.$store.state.plugins[plugin].notes, 'warning')
               }
               if ('auth' in this.$store.state.plugins[plugin]) {
                 this.stream.plugin.auth = this.$store.state.plugins[plugin].auth
@@ -160,15 +161,27 @@
             }
           }
         },
+        setStreamAlert (active, msg, type) {
+          this.streamAlert.active = active
+          this.streamAlert.msg = msg
+          this.streamAlert.type = type
+        },
         resetStreamAlert () {
           this.streamAlert.active = false
           this.streamAlert.msg = ''
           this.streamAlert.type = ''
         },
         onSave () {
+          this.loading = true
           console.log('@Todo: check url before save')
-          this.$store.commit(StreamLinkGuiMutations.UPDATE_STREAM, this.stream)
-          this.onCancel()
+          if (checkURL(this.stream.url)) {
+            this.$store.commit(StreamLinkGuiMutations.UPDATE_STREAM, this.stream)
+            this.loading = false
+            this.onCancel()
+          } else {
+            this.setStreamAlert(true, 'Unable to find channel: ' + this.stream.url, 'error')
+            this.loading = false
+          }
         },
         onCancel () {
           this.onEdit = false
