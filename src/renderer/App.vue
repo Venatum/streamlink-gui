@@ -31,9 +31,6 @@
         </v-btn>
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon @click="addStream = !addStream">
-          <v-icon>add</v-icon>
-        </v-btn>
         <v-btn icon>
           <v-icon>settings</v-icon>
         </v-btn>
@@ -72,6 +69,7 @@
     data: () => ({
       drawer: true,
       items: [
+        { icon: 'play_circle_outline', title: 'Play VOD / Stream', to: '/play_vod' },
         { icon: 'video_library', title: 'Streams', to: '/' },
         { icon: 'lock_open', title: 'Sensitive content', to: '/sensitive_content' },
         { icon: 'fab fa-vuejs', title: 'Electron-vue + Vuetify', to: '/vue' }
