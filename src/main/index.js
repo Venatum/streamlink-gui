@@ -56,6 +56,7 @@ app.on('activate', () => {
   }
 })
 
+autoUpdater.checkForUpdatesAndNotify()
 autoUpdater.on('update-downloaded', () => {
   autoUpdater.quitAndInstall()
 })

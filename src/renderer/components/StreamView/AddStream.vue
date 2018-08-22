@@ -77,7 +77,6 @@
         </v-card>
         <v-dialog
                 v-model="loading"
-                hide-overlay
                 persistent
                 width="300">
             <v-card color="primary" dark>
@@ -173,7 +172,6 @@
         },
         onSave () {
           this.loading = true
-          console.log('@Todo: check url before save')
           if (checkURL(this.stream.url)) {
             this.$store.commit(StreamLinkGuiMutations.ADD_STREAM, this.stream)
             this.loading = false
