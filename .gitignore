@@ -6,6 +6,7 @@ build/*
 node_modules/
 npm-debug.log
 npm-debug.log.*
+yarn.lock
 thumbs.db
 !.gitkeep
 

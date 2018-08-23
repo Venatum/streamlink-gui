@@ -9,8 +9,8 @@
 - [x] Add stream component
 - [x] Add stream backend
 - [x] Increment ID !!!
-- [ ] Add stream / EditStream: parsing url (plugin)
-- [ ] Add stream / EditStream: check if live exist
+- [x] Add stream / EditStream: parsing url (plugin)
+- [x] Add stream / EditStream: check if live exist
 - [x] Add stream auth (+ .json)
 - [ ] Add auth (+ .json)
 - [ ] Encrypt password
@@ -18,9 +18,13 @@
 - [x] Config.json
 - [ ] Config component
 - [x] Add sensitive content
-- [ ] Add +18 check
+- [x] Add +18 check
+- [ ] Add Pin code -> sensitive content ?
 - [ ] Check if streamlink exist
 - [ ] Multi languages (i18n) - https://vuetifyjs.com/en/framework/internationalization
 - [x] check onLive every n min
 - [x] Is on live in background
+- [x] Play component (VOD or stream not registered)
+- [ ] Add image for each stream
+- [ ] Add choice of quality
 - [ ] ...

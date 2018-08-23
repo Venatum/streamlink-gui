@@ -1,45 +1,25 @@
 <template>
-    <v-dialog v-model="onAdd" persistent max-width="75%">
+    <v-container grid-list-md text-xs-center>
+        <stream-alert class="px-0"></stream-alert>
         <v-card>
             <v-card-title class="grey">
-                <span class="headline">Add Stream</span>
+                <span class="headline">Play VOD / Stream</span>
             </v-card-title>
             <v-card-text>
                 <v-container grid-list-md>
                     <v-layout wrap>
                         <v-flex xs12>
                             <v-text-field
-                                    label="Stream URL" required autofocus clearable
-                                    hint="Example: twitch.tv/[streamer]"
+                                    label="Stream / VOD URL" required autofocus clearable
+                                    hint="Example: youtube.com/watch?v=XXXXXXXXX"
                                     prepend-icon="fas fa-link"
                                     v-model="stream.url">
-                            </v-text-field>
-                            <v-text-field
-                                    label="Stream Name" required
-                                    prepend-icon="fas fa-user-circle"
-                                    v-model="stream.name">
                             </v-text-field>
                             <v-text-field disabled
                                     label="Plugin"
                                     prepend-icon="fas fa-info-circle"
                                     v-model="stream.plugin.name">
                             </v-text-field>
-                        </v-flex>
-                        <v-flex xs6>
-                            <v-switch
-                                    label="Favourite"
-                                    color="yellow"
-                                    prepend-icon="star"
-                                    v-model="stream.favourite"
-                            ></v-switch>
-                        </v-flex>
-                        <v-flex xs6>
-                            <v-switch
-                                    label="Sensitive content"
-                                    color="red"
-                                    prepend-icon="fas fa-user-lock"
-                                    v-model="stream.sensitive"
-                            ></v-switch>
                         </v-flex>
                         <v-flex v-if="stream.plugin.auth" xs12>
                             <hr/>
@@ -67,12 +47,12 @@
                 <small>* indicates required field</small>
                  <v-alert outline v-if="streamAlert.active" :value="streamAlert.active" :type="streamAlert.type" style="text-align: center">
                     {{ this.streamAlert.msg }}
-                </v-alert>
+                 </v-alert>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="red darken-1" @click="onCancel">Cancel</v-btn>
-                <v-btn color="green darken-1" @click="onSave">Save</v-btn>
+                <v-btn color="red darken-1" @click="onClear">Clear</v-btn>
+                <v-btn color="green darken-1" @click="onPlay">Play</v-btn>
             </v-card-actions>
         </v-card>
         <v-dialog
@@ -90,23 +70,22 @@
                 </v-card-text>
             </v-card>
         </v-dialog>
-    </v-dialog>
+    </v-container>
 </template>
 
 <script>
+    import {checkURL, extractRootDomain} from '../tools'
+    import {StreamLinkGuiActions} from '@/store/actions'
     import {StreamLinkGuiMutations} from '@/store/mutations'
-    import {checkURL, extractRootDomain} from '../../tools'
+    import StreamAlert from './StreamView/StreamAlert'
 
     export default {
-      name: 'AddStream',
-      props: ['addStream'],
+      name: 'PlayVODView',
+      components: {StreamAlert},
       data: function () {
         return {
-          onAdd: this.addStream,
           loading: false,
           stream: {
-            id: 0,
-            name: '',
             plugin: {
               name: '',
               auth: false,
@@ -115,11 +94,7 @@
               key: ''
             },
             url: '',
-            quality: 'best',
-            icon: '',
-            favourite: false,
-            live: false,
-            sensitive: false
+            quality: 'best'
           },
           streamAlert: {
             active: false,
@@ -132,14 +107,12 @@
         'stream.url': function (val) {
           if (val) {
             this.stream.plugin.name = extractRootDomain(val)
-            this.stream.name = val.split('/').pop()
             this.checkPlugin()
             if (this.stream.plugin.name === '') {
               this.resetStreamAlert()
             }
           } else {
             this.stream.plugin.name = ''
-            this.stream.name = ''
             this.resetStreamAlert()
           }
         }
@@ -170,21 +143,33 @@
           this.streamAlert.msg = ''
           this.streamAlert.type = ''
         },
-        onSave () {
+        resetStream () {
+          this.stream = {
+            plugin: {
+              name: '',
+              auth: false,
+              login: '',
+              password: '',
+              key: ''
+            },
+            url: '',
+            quality: 'best'
+          }
+        },
+        onPlay () {
           this.loading = true
-          if (checkURL(this.stream.url)) {
-            this.$store.commit(StreamLinkGuiMutations.ADD_STREAM, this.stream)
+          if (this.stream.url !== '' && checkURL(this.stream.url)) {
             this.loading = false
-            this.onCancel()
+            this.$store.dispatch(StreamLinkGuiActions.PLAY_STREAM, this.stream)
           } else {
             this.setStreamAlert(true, 'Unable to find channel: ' + this.stream.url, 'error')
             this.loading = false
           }
         },
-        onCancel () {
-          this.onAdd = false
+        onClear () {
           this.resetStreamAlert()
-          this.$emit('setAddStream', false)
+          this.resetStream()
+          this.$store.commit(StreamLinkGuiMutations.SET_ALERT, { msg: 'Welcome on Streamlink-GUI', type: 'success' })
         }
       }
     }

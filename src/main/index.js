@@ -29,11 +29,9 @@ function createWindow () {
   /**
    * Initial window options
    */
-  mainWindow = new BrowserWindow({
-    height: 563,
-    useContentSize: true,
-    width: 1000
-  })
+  mainWindow = new BrowserWindow({show: false})
+  mainWindow.maximize()
+  mainWindow.show()
 
   mainWindow.loadURL(winURL)
 
@@ -56,6 +54,7 @@ app.on('activate', () => {
   }
 })
 
+autoUpdater.checkForUpdatesAndNotify()
 autoUpdater.on('update-downloaded', () => {
   autoUpdater.quitAndInstall()
 })

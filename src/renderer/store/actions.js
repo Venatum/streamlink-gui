@@ -2,8 +2,11 @@ import {StreamLinkGuiMutations} from '@/store/mutations'
 import {onLive, startStream, Storage} from '../tools'
 
 export const Files = {
-  CONFIG: new Storage('config.json'),
-  STREAMS: new Storage('streams.json')
+  CONFIG: new Storage('config.json', {
+    id: 0,
+    language: 'english'
+  }),
+  STREAMS: new Storage('streams.json', [])
 }
 
 export const StreamLinkGuiActions = {
@@ -12,6 +15,7 @@ export const StreamLinkGuiActions = {
   SET_CONFIG: 'setConfig',
   SET_PLUGINS: 'setPlugins',
   ON_LIVE: 'onLive',
+  RESET_LIVE: 'resetLive',
   RESET_STORE: 'resetStore'
 }
 
@@ -39,7 +43,7 @@ const actions = {
       ctx.commit(StreamLinkGuiMutations.SET_PLUGINS, data)
     } catch (e) {
       // @TODO: solve pb
-      ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: 'No plugins.json file.', type: 'error' })
+      ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: 'No plugins.json file.', type: 'error'})
     }
   },
   [StreamLinkGuiActions.PLAY_STREAM]: (ctx, stream) => {
@@ -53,6 +57,11 @@ const actions = {
       } else {
         ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: false})
       }
+    }
+  },
+  [StreamLinkGuiActions.RESET_LIVE]: async (ctx, streams) => {
+    for (let stream in streams) {
+      ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: false})
     }
   }
 }

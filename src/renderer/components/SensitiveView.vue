@@ -5,7 +5,7 @@
             <stream-alert class="px-0"></stream-alert>
             <v-container fluid>
                 <v-expansion-panel expand popout>
-                    <v-expansion-panel-content value="true">
+                    <v-expansion-panel-content>
                         <div slot="header">
                             <v-icon color="yellow">star</v-icon> Favourite
                         </div>
@@ -55,6 +55,24 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <!-- +18 Alerte -->
+        <v-dialog v-model="sensitiveAlerte" persistent max-width="500px">
+            <v-card>
+                <v-card-title class="headline red"><v-icon>lock</v-icon> Sensitive content 18+ </v-card-title>
+                <v-card-text>Are you sure to enter this section?</v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <router-link to="/" style="text-decoration: none">
+                        <v-btn color="blue darken-1" flat @click.native="sensitiveAlerte = false">
+                            Exit
+                        </v-btn>
+                    </router-link>
+                    <v-btn color="red darken-1" flat @click.native="sensitiveAlerte = false">
+                        Enter
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 
@@ -71,6 +89,7 @@
           panelFavourite: true,
           panelStreams: true,
           deleteAlerte: false,
+          sensitiveAlerte: true,
           deleteId: -1
         }
       },
