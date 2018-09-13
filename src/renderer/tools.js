@@ -37,8 +37,8 @@ export function extractRootDomain (url) {
   return domain
 }
 
-export function checkURL (url) {
-  let cmd = childProcess.spawnSync(`streamlink.exe ${url}`, {
+export function checkURL (streamlink, url) {
+  let cmd = childProcess.spawnSync(`${streamlink} ${url}`, {
     shell: true
   })
   return !cmd.output.toString('utf8').includes('Unable to find channel')

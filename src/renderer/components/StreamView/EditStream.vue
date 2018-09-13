@@ -95,6 +95,7 @@
 
 <script>
     import {StreamLinkGuiMutations} from '@/store/mutations'
+    import {StreamLinkGuiActions} from '@/store/actions'
     import {checkURL, extractRootDomain} from '../../tools'
 
     export default {
@@ -172,8 +173,9 @@
         },
         onSave () {
           this.loading = true
-          if (checkURL(this.stream.url)) {
+          if (checkURL(this.$store.state.config.exe, this.stream.url)) {
             this.$store.commit(StreamLinkGuiMutations.UPDATE_STREAM, this.stream)
+            this.$store.dispatch(StreamLinkGuiActions.IS_LIVE, this.stream)
             this.loading = false
             this.onCancel()
           } else {

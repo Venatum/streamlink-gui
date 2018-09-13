@@ -158,7 +158,7 @@
         },
         onPlay () {
           this.loading = true
-          if (this.stream.url !== '' && checkURL(this.stream.url)) {
+          if (this.stream.url !== '' && checkURL(this.$store.state.config.exe, this.stream.url)) {
             this.loading = false
             this.$store.dispatch(StreamLinkGuiActions.PLAY_STREAM, this.stream)
           } else {

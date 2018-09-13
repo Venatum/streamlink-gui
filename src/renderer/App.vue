@@ -61,6 +61,7 @@
 
 <script>
   import {StreamLinkGuiActions} from './store/actions'
+  import {StreamLinkGuiMutations} from './store/mutations'
   import AddStream from './components/StreamView/AddStream'
 
   export default {
@@ -82,11 +83,24 @@
     methods: {
       setAddStream (val) {
         this.addStream = val
+      },
+      setExe () {
+        let platform = require('os').platform()
+        let config = this.$store.state.config
+
+        if (platform === 'win32') {
+          config['exe'] = 'streamlink.exe'
+        } else {
+          // TODO: check this
+          config['exe'] = 'streamlink'
+        }
+        this.$store.commit(StreamLinkGuiMutations.SET_CONFIG, config)
       }
     },
     mounted () {
       this.$store.dispatch(StreamLinkGuiActions.SET_CONFIG)
       this.$store.dispatch(StreamLinkGuiActions.SET_STREAMS)
+      this.setExe()
       this.$store.dispatch(StreamLinkGuiActions.SET_PLUGINS)
       this.$store.dispatch(StreamLinkGuiActions.RESET_LIVE, this.$store.state.streams)
       this.liveInterval = setInterval(this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams), 10 * 60 * 1000)

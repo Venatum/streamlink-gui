@@ -4,6 +4,8 @@ import {onLive, startStream, Storage} from '../tools'
 export const Files = {
   CONFIG: new Storage('config.json', {
     id: 0,
+    exe: 'streamlink.exe',
+    liveRefresh: 10,
     language: 'english'
   }),
   STREAMS: new Storage('streams.json', [])
@@ -15,6 +17,7 @@ export const StreamLinkGuiActions = {
   SET_CONFIG: 'setConfig',
   SET_PLUGINS: 'setPlugins',
   ON_LIVE: 'onLive',
+  IS_LIVE: 'isLive',
   RESET_LIVE: 'resetLive',
   RESET_STORE: 'resetStore'
 }
@@ -48,15 +51,22 @@ const actions = {
   },
   [StreamLinkGuiActions.PLAY_STREAM]: (ctx, stream) => {
     ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: `Starting ${stream.url}`, type: 'info'})
-    startStream(`streamlink.exe ${stream.url} ${stream.quality}`, ctx)
+    startStream(`${ctx.state.config.exe} ${stream.url} ${stream.quality}`, ctx)
   },
   [StreamLinkGuiActions.ON_LIVE]: async (ctx, streams) => {
     for (let stream in streams) {
-      if (await onLive(`streamlink.exe ${streams[stream].url}`)) {
+      if (await onLive(`${ctx.state.config.exe} ${streams[stream].url}`)) {
         ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: true})
       } else {
         ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: false})
       }
+    }
+  },
+  [StreamLinkGuiActions.IS_LIVE]: async (ctx, stream) => {
+    if (await onLive(`${ctx.state.config.exe} ${stream.url}`)) {
+      ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: true})
+    } else {
+      ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: false})
     }
   },
   [StreamLinkGuiActions.RESET_LIVE]: async (ctx, streams) => {

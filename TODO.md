@@ -15,7 +15,7 @@
 - [ ] Encrypt password
 - [x] Update stream
 - [x] Config.json
-- [ ] Config component
+- [ ] Config component (opt: rm .json ?)
 - [x] Add sensitive content
 - [x] Add +18 check
 - [ ] Add Pin code -> sensitive content ?
@@ -26,4 +26,7 @@
 - [x] Play component (VOD or stream not registered)
 - [ ] Add image for each stream
 - [ ] Add choice of quality
+- [x] Check isLive -> addStream
+- [ ] Fix design
+- [x] Update for linux usage
 - [ ] ...
