@@ -17,7 +17,8 @@ const state = {
   config: {
     id: 0,
     language: 'english'
-  }
+  },
+  liveLoader: false
 }
 
 export default new Vuex.Store({

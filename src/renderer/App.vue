@@ -31,6 +31,12 @@
         </v-btn>
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn icon flat color="red"
+               :loading="this.$store.state.liveLoader"
+               :disabled="this.$store.state.liveLoader"
+               @click="reloadIsLive">
+          <v-icon>cached</v-icon>
+        </v-btn>
         <v-btn icon>
           <v-icon>settings</v-icon>
         </v-btn>
@@ -95,6 +101,9 @@
           config['exe'] = 'streamlink'
         }
         this.$store.commit(StreamLinkGuiMutations.SET_CONFIG, config)
+      },
+      reloadIsLive () {
+        this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams)
       }
     },
     mounted () {

@@ -9,7 +9,8 @@ export const StreamLinkGuiMutations = {
   UPDATE_LIVE: 'updateLive',
   SET_CONFIG: 'setConfig',
   SET_ALERT: 'setAlert',
-  SET_PLUGINS: 'setPlugins'
+  SET_PLUGINS: 'setPlugins',
+  SET_LIVE_LOADER: 'setLiveLoader'
 }
 
 const mutations = {
@@ -67,6 +68,9 @@ const mutations = {
   },
   [StreamLinkGuiMutations.SET_PLUGINS]: (state, plugins) => {
     state.plugins = plugins
+  },
+  [StreamLinkGuiMutations.SET_LIVE_LOADER]: (state, live) => {
+    state.liveLoader = live
   }
 }
 

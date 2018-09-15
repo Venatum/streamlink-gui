@@ -54,6 +54,7 @@ const actions = {
     startStream(`${ctx.state.config.exe} ${stream.url} ${stream.quality}`, ctx)
   },
   [StreamLinkGuiActions.ON_LIVE]: async (ctx, streams) => {
+    ctx.commit(StreamLinkGuiMutations.SET_LIVE_LOADER, true)
     for (let stream in streams) {
       if (await onLive(`${ctx.state.config.exe} ${streams[stream].url}`)) {
         ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: true})
@@ -61,6 +62,7 @@ const actions = {
         ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: false})
       }
     }
+    ctx.commit(StreamLinkGuiMutations.SET_LIVE_LOADER, false)
   },
   [StreamLinkGuiActions.IS_LIVE]: async (ctx, stream) => {
     if (await onLive(`${ctx.state.config.exe} ${stream.url}`)) {
