@@ -10,7 +10,7 @@ const state = {
   streams: [],
   plugins: [],
   alert: {
-    msg: 'Welcome on Streamlink-GUI',
+    msg: 'Welcome to Streamlink-GUI',
     type: 'success',
     display: true
   },

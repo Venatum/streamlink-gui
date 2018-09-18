@@ -169,7 +169,7 @@
         onClear () {
           this.resetStreamAlert()
           this.resetStream()
-          this.$store.commit(StreamLinkGuiMutations.SET_ALERT, { msg: 'Welcome on Streamlink-GUI', type: 'success' })
+          this.$store.commit(StreamLinkGuiMutations.SET_ALERT, { msg: 'Welcome to Streamlink-GUI', type: 'success' })
         }
       }
     }
