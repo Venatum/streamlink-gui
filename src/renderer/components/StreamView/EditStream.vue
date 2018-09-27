@@ -150,6 +150,9 @@
           for (let plugin in this.$store.state.plugins) {
             if (this.$store.state.plugins[plugin].urls.includes(this.stream.plugin.name)) {
               this.stream.plugin.name = this.$store.state.plugins[plugin].name
+              if (this.$store.state.plugins[plugin].icon && this.$store.state.plugins[plugin].icon !== '') {
+                this.stream.icon = 'static/Icons/' + this.$store.state.plugins[plugin].icon
+              }
               if ('notes' in this.$store.state.plugins[plugin]) {
                 this.setStreamAlert(true, this.$store.state.plugins[plugin].notes, 'warning')
               }

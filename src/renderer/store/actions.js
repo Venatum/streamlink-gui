@@ -49,9 +49,15 @@ const actions = {
       ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: 'No plugins.json file.', type: 'error'})
     }
   },
-  [StreamLinkGuiActions.PLAY_STREAM]: (ctx, stream) => {
+  [StreamLinkGuiActions.PLAY_STREAM]: async (ctx, stream) => {
     ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: `Starting ${stream.url}`, type: 'info'})
-    startStream(`${ctx.state.config.exe} ${stream.url} ${stream.quality}`, ctx)
+    if (await onLive(`${ctx.state.config.exe} ${stream.url}`)) {
+      ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: true})
+      startStream(`${ctx.state.config.exe} ${stream.url} ${stream.quality}`, ctx)
+    } else {
+      ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: `No playable streams found on this URL: ${stream.url}`, type: 'error' })
+      ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: false})
+    }
   },
   [StreamLinkGuiActions.ON_LIVE]: async (ctx, streams) => {
     ctx.commit(StreamLinkGuiMutations.SET_LIVE_LOADER, true)
