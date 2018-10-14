@@ -92,7 +92,7 @@
           this.editStream = true
         },
         playStream () {
-          this.$store.dispatch(StreamLinkGuiActions.PLAY_STREAM, this.stream)
+          this.$store.dispatch(StreamLinkGuiActions.QUALITY_CHOICE, this.stream)
         }
       }
     }

@@ -44,6 +44,18 @@ export function checkURL (streamlink, url) {
   return !cmd.output.toString('utf8').includes('Unable to find channel')
 }
 
+export function getQualities (url) {
+  let cmd = childProcess.spawnSync(`${url}`, {
+    shell: true
+  })
+  let output = cmd.output.toString('utf8').split('\n')
+  for (let i = 0; i < output.length; i++) {
+    if (output[i].includes('Available streams:')) {
+      return output[i].split(':').pop().replace(/\(([^)]+)\)/g, '').replace(/ /g, '').split(',')
+    }
+  }
+}
+
 /**
  * startStream
  */
@@ -56,16 +68,16 @@ export function startStream (command, ctx) {
     data = data.toString('utf8')
     if (data.includes('error')) {
       let output = data.slice(data.indexOf('error:') + 6)
-      ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: output, type: 'error' })
+      ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: output, type: 'error'})
     } else if (data.includes('info')) {
       let output = data.slice(data.indexOf('[info]') + 6)
-      ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: output, type: 'info' })
+      ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: output, type: 'info'})
     } else {
-      ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: data, type: 'info' })
+      ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: data, type: 'info'})
     }
   })
   cmd.stderr.on('data', (data) => {
-    ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: data, type: 'error' })
+    ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: data, type: 'error'})
   })
   cmd.on('error', (err) => {
     console.error('Failed to start child process.', err)
@@ -129,6 +141,7 @@ export class Storage {
   get (key) {
     return this.data[key]
   }
+
   set (key, val) {
     this.data[key] = val
     fs.writeFileSync(this.path, JSON.stringify(this.data))
@@ -138,6 +151,7 @@ export class Storage {
     this.data = JSON.parse(fs.readFileSync(this.path))
     return this.data
   }
+
   setData (data) {
     this.data = data
     fs.writeFileSync(this.path, JSON.stringify(data))

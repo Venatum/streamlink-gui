@@ -10,7 +10,10 @@ export const StreamLinkGuiMutations = {
   SET_CONFIG: 'setConfig',
   SET_ALERT: 'setAlert',
   SET_PLUGINS: 'setPlugins',
-  SET_LIVE_LOADER: 'setLiveLoader'
+  SET_LIVE_LOADER: 'setLiveLoader',
+  SET_STREAM_QUALITY: 'setStreamQuality',
+  SET_STREAMED_STREAM: 'setStreamedStream',
+  UPDATE_STREAMED_STREAM: 'updateStreamedStream'
 }
 
 const mutations = {
@@ -71,6 +74,18 @@ const mutations = {
   },
   [StreamLinkGuiMutations.SET_LIVE_LOADER]: (state, live) => {
     state.liveLoader = live
+  },
+  [StreamLinkGuiMutations.SET_STREAM_QUALITY]: (state, quality) => {
+    state.quality.qualities = quality.qualities
+    state.quality.display = quality.display
+  },
+  [StreamLinkGuiMutations.SET_STREAMED_STREAM]: (state, stream) => {
+    state.streamedStream = stream
+  },
+  [StreamLinkGuiMutations.UPDATE_STREAMED_STREAM]: (state, update) => {
+    for (let info in update) {
+      state.streamedStream[info] = update[info]
+    }
   }
 }
 

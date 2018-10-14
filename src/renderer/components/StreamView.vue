@@ -56,6 +56,8 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <!-- StreamQuality -->
+        <stream-quality v-if="onQuality" :onQuality="onQuality"></stream-quality>
     </v-container>
 </template>
 
@@ -64,10 +66,11 @@
     import {StreamLinkGuiMutations} from '../store/mutations'
     import StreamAlert from './StreamView/StreamAlert'
     import Isotope from 'vueisotope'
+    import StreamQuality from './StreamView/StreamQuality'
 
     export default {
       name: 'StreamView',
-      components: {StreamAlert, StreamInformation, Isotope},
+      components: {StreamQuality, StreamAlert, StreamInformation, Isotope},
       data: function () {
         return {
           panelFavourite: true,
@@ -123,6 +126,9 @@
       computed: {
         getStreams () {
           return this.$store.state.streams
+        },
+        onQuality () {
+          return this.$store.state.quality.display
         }
       }
     }

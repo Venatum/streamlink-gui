@@ -14,6 +14,7 @@
             :key="i"
             v-for="(item, i) in items"
             exact
+            @click="resetAlert"
           >
             <v-list-tile-action>
               <v-icon v-html="item.icon"></v-icon>
@@ -104,6 +105,9 @@
       },
       reloadIsLive () {
         this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams)
+      },
+      resetAlert () {
+        this.$store.commit(StreamLinkGuiMutations.SET_ALERT, {msg: 'Welcome to Streamlink-GUI', type: 'success'})
       }
     },
     mounted () {

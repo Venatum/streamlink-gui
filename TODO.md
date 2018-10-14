@@ -11,6 +11,6 @@
 - [ ] Check if streamlink exist
 - [ ] Multi languages (i18n) - https://vuetifyjs.com/en/framework/internationalization
 - [ ] Add image for each stream
-- [ ] Add choice of quality
-- [x] Fix design -> [Vue.Isotop](https://github.com/David-Desmaisons/Vue.Isotope)
+- [x] Add choice of quality
+- [ ] Fix plugin not found
 - [ ] ...

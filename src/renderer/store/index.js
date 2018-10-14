@@ -18,7 +18,12 @@ const state = {
     id: 0,
     language: 'english'
   },
-  liveLoader: false
+  liveLoader: false,
+  quality: {
+    qualities: [],
+    display: false
+  },
+  streamedStream: {}
 }
 
 export default new Vuex.Store({
