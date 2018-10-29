@@ -32,6 +32,12 @@
         </v-btn>
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn v-if="isConnected" icon flat color="green">
+          <v-icon>wifi</v-icon>
+        </v-btn>
+        <v-btn v-else icon flat color="red">
+          <v-icon>wifi_off</v-icon>
+        </v-btn>
         <v-btn icon flat color="red"
                :loading="this.$store.state.liveLoader"
                :disabled="this.$store.state.liveLoader"
@@ -85,7 +91,9 @@
       miniVariant: false,
       title: 'Streamlink GUI',
       addStream: false,
-      liveInterval: null
+      liveInterval: null,
+      isConnected: false,
+      internetInterval: null
     }),
     methods: {
       setAddStream (val) {
@@ -108,6 +116,9 @@
       },
       resetAlert () {
         this.$store.commit(StreamLinkGuiMutations.SET_ALERT, {msg: 'Welcome to Streamlink-GUI', type: 'success'})
+      },
+      checkInternet () {
+        this.isConnected = navigator.onLine
       }
     },
     mounted () {
@@ -116,6 +127,8 @@
       this.setExe()
       this.$store.dispatch(StreamLinkGuiActions.SET_PLUGINS)
       this.$store.dispatch(StreamLinkGuiActions.RESET_LIVE, this.$store.state.streams)
+      this.isConnected = navigator.onLine
+      this.internetInterval = setInterval(this.checkInternet, 10000)
       this.liveInterval = setInterval(this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams), 10 * 60 * 1000)
     },
     computed: {

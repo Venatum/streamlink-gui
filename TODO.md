@@ -1,9 +1,8 @@
 ### TODO
 
-- [?] Update<br>
+- [ ] $$$ Update & Update notification<br>
     https://github.com/electron/update.electronjs.org<br>
     https://github.com/iffy/electron-updater-example<br>
-- [?] Update notification
 - [ ] Add auth (+ .json)
 - [ ] Encrypt password
 - [ ] Config component (opt: rm .json ?)
@@ -13,4 +12,6 @@
 - [ ] Add image for each stream
 - [x] Add choice of quality
 - [ ] Fix plugin not found
+- [x] Check internet connection
+- [ ] Filter design
 - [ ] ...
