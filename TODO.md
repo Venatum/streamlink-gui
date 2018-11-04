@@ -1,8 +1,7 @@
 ### TODO
 
-- [ ] $$$ Update & Update notification<br>
-    https://github.com/electron/update.electronjs.org<br>
-    https://github.com/iffy/electron-updater-example<br>
+- [x] <strong>CHECK THIS</strong> Update notification<br>
+    https://api.github.com/repos/Venatum/streamlink-gui/releases/latest
 - [ ] Add auth (+ .json)
 - [ ] Encrypt password
 - [ ] Config component (opt: rm .json ?)
