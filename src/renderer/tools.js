@@ -37,7 +37,7 @@ export function extractRootDomain (url) {
   return domain
 }
 
-export function checkURL (streamlink, url) {
+export async function checkURL (streamlink, url) {
   let cmd = childProcess.spawnSync(`${streamlink} ${url}`, {
     shell: true
   })
@@ -48,7 +48,8 @@ export function getQualities (url) {
   let cmd = childProcess.spawnSync(`${url}`, {
     shell: true
   })
-  let output = cmd.output.toString('utf8').split('\n')
+  let char = (require('os').platform() === 'win32') ? '\r' : '\n'
+  let output = cmd.output.toString('utf8').split(char)
   for (let i = 0; i < output.length; i++) {
     if (output[i].includes('Available streams:')) {
       return output[i].split(':').pop().replace(/\(([^)]+)\)/g, '').replace(/ /g, '').split(',')

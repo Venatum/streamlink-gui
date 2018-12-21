@@ -5,12 +5,14 @@
 - [ ] Add auth (+ .json)
 - [ ] Encrypt password
 - [ ] Config component (opt: rm .json ?)
-- [ ] Add Pin code -> sensitive content ?
 - [ ] Check if streamlink exist
 - [ ] Multi languages (i18n) - https://vuetifyjs.com/en/framework/internationalization
 - [ ] Add image for each stream
 - [x] Add choice of quality
-- [ ] Fix plugin not found
+- [x] Fix plugin not found
 - [x] Check internet connection
+- [x] Add info -> internet connection
 - [ ] Filter design
+- [ ] Async on validate
+- [x] Auto select video quality
 - [ ] ...

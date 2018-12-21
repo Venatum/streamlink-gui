@@ -131,12 +131,20 @@
               this.setStreamAlert(true, this.$store.state.plugins[plugin].notes, 'warning')
             }
             if ('auth' in this.$store.state.plugins[plugin]) {
-              this.stream.plugin.auth = this.$store.state.plugins[plugin].auth
+              // this.stream.plugin.auth = this.$store.state.plugins[plugin].auth
               // @TODO: set auth
             }
             break
           }
         }
+      },
+      pluginFound () {
+        for (let plugin in this.$store.state.plugins) {
+          if (this.$store.state.plugins[plugin].name === this.stream.plugin.name) {
+            return true
+          }
+        }
+        return false
       },
       setStreamAlert (active, msg, type) {
         this.streamAlert.active = active
@@ -163,7 +171,11 @@
       },
       onPlay () {
         this.loading = true
-        this.$store.dispatch(StreamLinkGuiActions.QUALITY_CHOICE, this.stream)
+        if (this.pluginFound()) {
+          this.$store.dispatch(StreamLinkGuiActions.QUALITY_CHOICE, this.stream)
+        } else {
+          this.$store.commit(StreamLinkGuiMutations.SET_ALERT, {msg: `Unable to find plugin: ${this.stream.plugin.name}`, type: 'error'})
+        }
         this.loading = false
       },
       onClear () {

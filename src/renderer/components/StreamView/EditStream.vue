@@ -20,9 +20,9 @@
                                     v-model="stream.name">
                             </v-text-field>
                             <v-text-field disabled
-                                    label="Plugin"
-                                    prepend-icon="fas fa-info-circle"
-                                    v-model="stream.plugin.name">
+                                          label="Plugin"
+                                          prepend-icon="fas fa-info-circle"
+                                          v-model="stream.plugin.name">
                             </v-text-field>
                         </v-flex>
                         <v-flex xs6>
@@ -46,26 +46,27 @@
                             <h2 class="grey" style="text-align: center">Login and/or Key</h2>
                             <hr/>
                             <v-text-field clearable
-                                    label="Login"
-                                    prepend-icon="far fa-user"
-                                    v-model="stream.plugin.login">
+                                          label="Login"
+                                          prepend-icon="far fa-user"
+                                          v-model="stream.plugin.login">
                             </v-text-field>
                             <v-text-field clearable
-                                    label="Password"
-                                    type="password"
-                                    prepend-icon="fas fa-unlock"
-                                    v-model="stream.plugin.password">
+                                          label="Password"
+                                          type="password"
+                                          prepend-icon="fas fa-unlock"
+                                          v-model="stream.plugin.password">
                             </v-text-field>
                             <v-text-field clearable
-                                    label="Key / Token"
-                                    prepend-icon="fas fa-key"
-                                    v-model="stream.plugin.key">
+                                          label="Key / Token"
+                                          prepend-icon="fas fa-key"
+                                          v-model="stream.plugin.key">
                             </v-text-field>
                         </v-flex>
                     </v-layout>
                 </v-container>
                 <small>* indicates required field</small>
-                 <v-alert outline v-if="streamAlert.active" :value="streamAlert.active" :type="streamAlert.type" style="text-align: center">
+                <v-alert outline v-if="streamAlert.active" :value="streamAlert.active" :type="streamAlert.type"
+                         style="text-align: center">
                     {{ this.streamAlert.msg }}
                 </v-alert>
             </v-card-text>
@@ -94,105 +95,115 @@
 </template>
 
 <script>
-    import {StreamLinkGuiMutations} from '@/store/mutations'
-    import {StreamLinkGuiActions} from '@/store/actions'
-    import {checkURL, extractRootDomain} from '../../tools'
+  import {StreamLinkGuiMutations} from '@/store/mutations'
+  import {StreamLinkGuiActions} from '@/store/actions'
+  import {checkURL, extractRootDomain} from '../../tools'
 
-    export default {
-      name: 'AddStream',
-      props: ['editStream', 'data'],
-      data: function () {
-        return {
-          onEdit: this.editStream,
-          loading: false,
-          stream: {
-            id: this.data.id,
-            name: this.data.name,
-            plugin: {
-              name: this.data.plugin.name,
-              auth: this.data.plugin.auth,
-              login: this.data.plugin.login,
-              password: this.data.plugin.password,
-              key: this.data.plugin.key
-            },
-            url: this.data.url,
-            quality: this.data.quality,
-            icon: this.data.icon,
-            favourite: this.data.favourite,
-            live: this.data.live,
-            sensitive: this.data.sensitive
+  export default {
+    name: 'AddStream',
+    props: ['editStream', 'data'],
+    data: function () {
+      return {
+        onEdit: this.editStream,
+        loading: false,
+        stream: {
+          id: this.data.id,
+          name: this.data.name,
+          plugin: {
+            name: this.data.plugin.name,
+            auth: this.data.plugin.auth,
+            login: this.data.plugin.login,
+            password: this.data.plugin.password,
+            key: this.data.plugin.key
           },
-          streamAlert: {
-            active: false,
-            msg: '',
-            type: ''
-          }
+          url: this.data.url,
+          quality: this.data.quality,
+          icon: this.data.icon,
+          favourite: this.data.favourite,
+          live: this.data.live,
+          sensitive: this.data.sensitive
+        },
+        streamAlert: {
+          active: false,
+          msg: '',
+          type: ''
         }
-      },
-      watch: {
-        'stream.url': function (val) {
-          if (val) {
-            this.stream.plugin.name = extractRootDomain(val)
-            this.stream.name = val.split('/').pop()
-            this.checkPlugin()
-            if (this.stream.plugin.name === '') {
-              this.resetStreamAlert()
-            }
-          } else {
-            this.stream.plugin.name = ''
-            this.stream.name = ''
+      }
+    },
+    watch: {
+      'stream.url': function (val) {
+        if (val) {
+          this.stream.plugin.name = extractRootDomain(val)
+          this.stream.name = val.split('/').pop()
+          this.checkPlugin()
+          if (this.stream.plugin.name === '') {
             this.resetStreamAlert()
           }
+        } else {
+          this.stream.plugin.name = ''
+          this.stream.name = ''
+          this.resetStreamAlert()
         }
-      },
-      methods: {
-        checkPlugin () {
-          for (let plugin in this.$store.state.plugins) {
-            if (this.$store.state.plugins[plugin].urls.includes(this.stream.plugin.name)) {
-              this.stream.plugin.name = this.$store.state.plugins[plugin].name
-              if (this.$store.state.plugins[plugin].icon && this.$store.state.plugins[plugin].icon !== '') {
-                this.stream.icon = 'static/Icons/' + this.$store.state.plugins[plugin].icon
-              }
-              if ('notes' in this.$store.state.plugins[plugin]) {
-                this.setStreamAlert(true, this.$store.state.plugins[plugin].notes, 'warning')
-              }
-              if ('auth' in this.$store.state.plugins[plugin]) {
-                this.stream.plugin.auth = this.$store.state.plugins[plugin].auth
-                // @TODO: set auth
-              }
-              break
+      }
+    },
+    methods: {
+      checkPlugin () {
+        for (let plugin in this.$store.state.plugins) {
+          if (this.$store.state.plugins[plugin].urls.includes(this.stream.plugin.name)) {
+            this.stream.plugin.name = this.$store.state.plugins[plugin].name
+            if (this.$store.state.plugins[plugin].icon && this.$store.state.plugins[plugin].icon !== '') {
+              this.stream.icon = 'static/Icons/' + this.$store.state.plugins[plugin].icon
+            }
+            if ('notes' in this.$store.state.plugins[plugin]) {
+              this.setStreamAlert(true, this.$store.state.plugins[plugin].notes, 'warning')
+            }
+            if ('auth' in this.$store.state.plugins[plugin]) {
+              // this.stream.plugin.auth = this.$store.state.plugins[plugin].auth
+              // @TODO: set auth
             }
           }
-        },
-        setStreamAlert (active, msg, type) {
-          this.streamAlert.active = active
-          this.streamAlert.msg = msg
-          this.streamAlert.type = type
-        },
-        resetStreamAlert () {
-          this.streamAlert.active = false
-          this.streamAlert.msg = ''
-          this.streamAlert.type = ''
-        },
-        onSave () {
-          this.loading = true
+        }
+      },
+      pluginFound () {
+        for (let plugin in this.$store.state.plugins) {
+          if (this.$store.state.plugins[plugin].name === this.stream.plugin.name) {
+            return true
+          }
+        }
+        return false
+      },
+      setStreamAlert (active, msg, type) {
+        this.streamAlert.active = active
+        this.streamAlert.msg = msg
+        this.streamAlert.type = type
+      },
+      resetStreamAlert () {
+        this.streamAlert.active = false
+        this.streamAlert.msg = ''
+        this.streamAlert.type = ''
+      },
+      onSave () {
+        this.loading = true
+        if (this.pluginFound()) {
           if (checkURL(this.$store.state.config.exe, this.stream.url)) {
             this.$store.commit(StreamLinkGuiMutations.UPDATE_STREAM, this.stream)
             this.$store.dispatch(StreamLinkGuiActions.IS_LIVE, this.stream)
-            this.loading = false
             this.onCancel()
           } else {
             this.setStreamAlert(true, 'Unable to find channel: ' + this.stream.url, 'error')
-            this.loading = false
           }
-        },
-        onCancel () {
-          this.onEdit = false
-          this.resetStreamAlert()
-          this.$emit('setEditStream', false)
+        } else {
+          this.setStreamAlert(true, 'Unable to find plugin: ' + this.stream.plugin.name, 'error')
         }
+        this.loading = false
+      },
+      onCancel () {
+        this.onEdit = false
+        this.resetStreamAlert()
+        this.$emit('setEditStream', false)
       }
     }
+  }
 </script>
 
 <style scoped>

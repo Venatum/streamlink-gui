@@ -5,10 +5,6 @@
                           :src="getIcon"
                           width="200px" height="200px"
             ></v-card-media>
-            <!--<v-card-media class="streamLogo"-->
-                          <!--src="https://www.twitch.tv/p/assets/uploads/twitch_474x356.png"-->
-                          <!--width="auto" height="200px"-->
-            <!--&gt;</v-card-media>-->
             <v-card-title>
                 <v-layout align-center justify-space-around row fill-height>
                     <v-icon v-if="stream.live" style="color: red">fas fa-circle</v-icon>

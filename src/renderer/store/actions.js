@@ -82,7 +82,7 @@ const actions = {
     if (await onLive(`${ctx.state.config.exe} ${stream.url}`)) {
       ctx.commit(StreamLinkGuiMutations.SET_STREAMED_STREAM, stream)
       ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: true})
-      ctx.commit(StreamLinkGuiMutations.SET_STREAM_QUALITY, {display: true, qualities: getQualities(`${ctx.state.config.exe} ${stream.url}`)})
+      ctx.commit(StreamLinkGuiMutations.SET_STREAM_QUALITY, {default: stream.quality, display: true, qualities: getQualities(`${ctx.state.config.exe} ${stream.url}`)})
     } else {
       ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: `No playable streams found on this URL: ${stream.url}`, type: 'error' })
       ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: false})

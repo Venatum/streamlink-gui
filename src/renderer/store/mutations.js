@@ -78,6 +78,7 @@ const mutations = {
   [StreamLinkGuiMutations.SET_STREAM_QUALITY]: (state, quality) => {
     state.quality.qualities = quality.qualities
     state.quality.display = quality.display
+    state.quality.default = quality.default
   },
   [StreamLinkGuiMutations.SET_STREAMED_STREAM]: (state, stream) => {
     state.streamedStream = stream

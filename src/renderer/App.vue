@@ -33,7 +33,7 @@
                 <v-toolbar-title v-text="title"></v-toolbar-title>
                 <v-spacer></v-spacer>
                 <!-- TODO: check update -->
-                <v-btn v-if="update" icon flat color="orange">
+                <v-btn v-if="update" icon flat color="orange" @click="openUpdate">
                     <v-icon>notification_important</v-icon>
                 </v-btn>
                 <v-btn v-if="isConnected" icon flat color="green">
@@ -61,6 +61,20 @@
                     <add-stream v-if="addStream" :add-stream="addStream" v-on:setAddStream="setAddStream"></add-stream>
 
                     <config v-if="showConfig" :show-config="showConfig"></config>
+
+                    <!-- Internet Alerte -->
+                    <v-dialog v-if="!isConnected" v-model="notConnected" persistent max-width="500px">
+                        <v-card>
+                            <v-card-title class="headline error">Internet connection</v-card-title>
+                            <v-card-text>Please, check your internet connection.</v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="red darken-1" flat @click.native="notConnected = true; isConnected = true">
+                                    Close
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
 
                     <v-fab-transition>
                         <v-btn dark fab fixed bottom right
@@ -105,6 +119,7 @@
       update: false,
       liveInterval: null,
       isConnected: false,
+      notConnected: false,
       internetInterval: null
     }),
     methods: {
@@ -131,14 +146,18 @@
       },
       checkInternet () {
         this.isConnected = navigator.onLine
+        this.notConnected = !this.notConnected
+      },
+      openUpdate () {
+        window.open('https://github.com/Venatum/streamlink-gui/releases')
       },
       updateAvailable () {
+        // TODO: check version
         axios
           .get('https://api.github.com/repos/Venatum/streamlink-gui/releases/latest')
           // .get('https://api.github.com/repos/streamlink/streamlink/releases/latest')
           .then(response => {
             console.log(response.data.tag_name)
-            console.log(app.getVersion())
             this.update = (response.data.tag_name !== app.getVersion())
           }).catch(error => {
             console.error(error)
@@ -152,7 +171,7 @@
       this.setExe()
       this.$store.dispatch(StreamLinkGuiActions.SET_PLUGINS)
       this.$store.dispatch(StreamLinkGuiActions.RESET_LIVE, this.$store.state.streams)
-      this.isConnected = navigator.onLine
+      this.checkInternet()
       this.internetInterval = setInterval(this.checkInternet, 10000)
       this.liveInterval = setInterval(this.$store.dispatch(StreamLinkGuiActions.ON_LIVE, this.$store.state.streams), 10 * 60 * 1000)
       this.updateAvailable()

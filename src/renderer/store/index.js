@@ -21,6 +21,7 @@ const state = {
   liveLoader: false,
   quality: {
     qualities: [],
+    default: '',
     display: false
   },
   streamedStream: {}

@@ -1,7 +1,7 @@
 <template>
     <v-layout row justify-center>
         <v-dialog v-model="onQuality" scrollable max-width="300px">
-            <v-btn slot="activator" color="primary" dark>Open Dialog</v-btn>
+            <!--<v-btn slot="activator" color="primary" dark>Open Dialog</v-btn>-->
             <v-card>
                 <v-card-title>Select Country</v-card-title>
                 <v-divider></v-divider>
@@ -29,7 +29,7 @@
     props: ['onQuality'],
     data () {
       return {
-        quality: ''
+        quality: this.$store.state.quality.default
       }
     },
     methods: {
