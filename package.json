@@ -1,9 +1,9 @@
 {
   "name": "streamlink-gui",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "author": "Venatum <vincentlequec@gmail.com>",
   "description": "A GUI to use streamlink",
-  "license": "BSD 2-Clause License",
+  "license": "BSD-2-Clause",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -54,11 +54,12 @@
     }
   },
   "dependencies": {
-    "axios": "^0.16.1",
+    "axios": "^0.18.0",
     "electron-updater": "^3.1.1",
     "vue": "^2.4.2",
     "vue-electron": "^1.0.6",
     "vue-router": "^2.5.3",
+    "vueisotope": "^3.1.2",
     "vuetify": "1.0.0",
     "vuex": "^2.3.1"
   },

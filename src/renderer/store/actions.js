@@ -1,9 +1,11 @@
 import {StreamLinkGuiMutations} from '@/store/mutations'
-import {onLive, startStream, Storage} from '../tools'
+import {getQualities, onLive, startStream, Storage} from '../tools'
 
 export const Files = {
   CONFIG: new Storage('config.json', {
     id: 0,
+    exe: 'streamlink.exe',
+    liveRefresh: 10,
     language: 'english'
   }),
   STREAMS: new Storage('streams.json', [])
@@ -15,8 +17,10 @@ export const StreamLinkGuiActions = {
   SET_CONFIG: 'setConfig',
   SET_PLUGINS: 'setPlugins',
   ON_LIVE: 'onLive',
+  IS_LIVE: 'isLive',
   RESET_LIVE: 'resetLive',
-  RESET_STORE: 'resetStore'
+  RESET_STORE: 'resetStore',
+  QUALITY_CHOICE: 'qualityChoice'
 }
 
 // ctx: ActionContext
@@ -46,22 +50,42 @@ const actions = {
       ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: 'No plugins.json file.', type: 'error'})
     }
   },
-  [StreamLinkGuiActions.PLAY_STREAM]: (ctx, stream) => {
+  [StreamLinkGuiActions.PLAY_STREAM]: async (ctx, stream) => {
     ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: `Starting ${stream.url}`, type: 'info'})
-    startStream(`streamlink.exe ${stream.url} ${stream.quality}`, ctx)
+    startStream(`${ctx.state.config.exe} ${stream.url} ${stream.quality}`, ctx)
   },
   [StreamLinkGuiActions.ON_LIVE]: async (ctx, streams) => {
+    ctx.commit(StreamLinkGuiMutations.SET_LIVE_LOADER, true)
     for (let stream in streams) {
-      if (await onLive(`streamlink.exe ${streams[stream].url}`)) {
+      if (await onLive(`${ctx.state.config.exe} ${streams[stream].url}`)) {
         ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: true})
       } else {
         ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: false})
       }
     }
+    ctx.commit(StreamLinkGuiMutations.SET_LIVE_LOADER, false)
+  },
+  [StreamLinkGuiActions.IS_LIVE]: async (ctx, stream) => {
+    if (await onLive(`${ctx.state.config.exe} ${stream.url}`)) {
+      ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: true})
+    } else {
+      ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: false})
+    }
   },
   [StreamLinkGuiActions.RESET_LIVE]: async (ctx, streams) => {
     for (let stream in streams) {
       ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: streams[stream].id, live: false})
+    }
+  },
+  [StreamLinkGuiActions.QUALITY_CHOICE]: async (ctx, stream) => {
+    ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: `Starting ${stream.url}`, type: 'info'})
+    if (await onLive(`${ctx.state.config.exe} ${stream.url}`)) {
+      ctx.commit(StreamLinkGuiMutations.SET_STREAMED_STREAM, stream)
+      ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: true})
+      ctx.commit(StreamLinkGuiMutations.SET_STREAM_QUALITY, {default: stream.quality, display: true, qualities: getQualities(`${ctx.state.config.exe} ${stream.url}`)})
+    } else {
+      ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: `No playable streams found on this URL: ${stream.url}`, type: 'error' })
+      ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: false})
     }
   }
 }

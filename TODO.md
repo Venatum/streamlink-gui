@@ -1,30 +1,18 @@
 ### TODO
 
-- [x] Plugins.json
-- [x] Travis Build
-- [?] Update<br>
-    https://github.com/electron/update.electronjs.org<br>
-    https://github.com/iffy/electron-updater-example<br>
-- [?] Update notification
-- [x] Add stream component
-- [x] Add stream backend
-- [x] Increment ID !!!
-- [x] Add stream / EditStream: parsing url (plugin)
-- [x] Add stream / EditStream: check if live exist
-- [x] Add stream auth (+ .json)
+- [x] <strong>CHECK THIS</strong> Update notification<br>
+    https://api.github.com/repos/Venatum/streamlink-gui/releases/latest
 - [ ] Add auth (+ .json)
 - [ ] Encrypt password
-- [x] Update stream
-- [x] Config.json
-- [ ] Config component
-- [x] Add sensitive content
-- [x] Add +18 check
-- [ ] Add Pin code -> sensitive content ?
+- [ ] Config component (opt: rm .json ?)
 - [ ] Check if streamlink exist
 - [ ] Multi languages (i18n) - https://vuetifyjs.com/en/framework/internationalization
-- [x] check onLive every n min
-- [x] Is on live in background
-- [x] Play component (VOD or stream not registered)
 - [ ] Add image for each stream
-- [ ] Add choice of quality
+- [x] Add choice of quality
+- [x] Fix plugin not found
+- [x] Check internet connection
+- [x] Add info -> internet connection
+- [ ] Filter design
+- [ ] Async on validate
+- [x] Auto select video quality
 - [ ] ...
