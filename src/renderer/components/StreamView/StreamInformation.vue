@@ -1,10 +1,10 @@
 <template>
     <div>
         <v-card flat class="elevation-20 white--text">
-            <v-card-media class="streamLogo"
+            <v-img class="streamLogo"
                           :src="getIcon"
                           width="200px" height="200px"
-            ></v-card-media>
+            ></v-img>
             <v-card-title>
                 <v-layout align-center justify-space-around row fill-height>
                     <v-icon v-if="stream.live" style="color: red">fas fa-circle</v-icon>
