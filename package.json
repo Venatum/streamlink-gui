@@ -40,11 +40,11 @@
     "chalk": "^2.4.1",
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.6",
-    "css-loader": "^0.28.11",
+    "css-loader": "^2.1.1",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "^2.0.4",
-    "electron-builder": "^20.19.2",
+    "electron-builder": "^20.39.0",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^4.19.1",
@@ -64,6 +64,7 @@
     "style-loader": "^0.21.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
+    "terser": "^3.14.1",
     "url-loader": "^1.0.1",
     "vue-cli-plugin-vuetify": "^0.4.6",
     "vue-html-loader": "^1.2.4",
@@ -112,5 +113,8 @@
     }
   },
   "license": "BSD-2-Clause",
-  "main": "./dist/electron/main.js"
+  "main": "./dist/electron/main.js",
+  "resolutions": {
+    "terser": "3.14.1"
+  }
 }
