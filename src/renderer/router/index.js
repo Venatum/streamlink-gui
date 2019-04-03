@@ -16,6 +16,11 @@ export default new Router({
       component: require('@/components/SensitiveView').default
     },
     {
+      path: '/play_vod',
+      name: 'Play VOD / Stream',
+      component: require('@/components/PlayVODView').default
+    },
+    {
       path: '/vue',
       name: 'Electron-vue + Vuetify',
       component: require('@/components/WelcomeView').default

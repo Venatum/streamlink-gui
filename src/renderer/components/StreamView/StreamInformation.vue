@@ -1,10 +1,10 @@
 <template>
     <div>
         <v-card flat class="elevation-20 white--text">
-            <v-card-media class="streamLogo"
-                          :src="getIcon"
-                          width="200px" height="200px"
-            ></v-card-media>
+            <v-img class="streamLogo"
+                   :src="getIcon"
+                   height="200px"
+            ></v-img>
             <v-card-title>
                 <v-layout align-center justify-space-around row fill-height>
                     <v-icon v-if="stream.live" style="color: red">fas fa-circle</v-icon>
@@ -48,50 +48,51 @@
             </v-card-actions>
         </v-card>
         <!-- Add/Update stream -->
-        <edit-stream v-if="editStream" :editStream="editStream" :data="stream" v-on:setEditStream="setEditStream"></edit-stream>
+        <edit-stream v-if="editStream" :editStream="editStream" :data="stream"
+                     v-on:setEditStream="setEditStream"></edit-stream>
     </div>
 </template>
 
 <script>
-    import EditStream from './EditStream'
-    import {StreamLinkGuiMutations} from '../../store/mutations'
-    import {StreamLinkGuiActions} from '../../store/actions'
+  import EditStream from './EditStream'
+  import {StreamLinkGuiMutations} from '../../store/mutations'
+  import {StreamLinkGuiActions} from '../../store/actions'
 
-    export default {
-      name: 'StreamInformation',
-      components: {EditStream},
-      props: ['stream'],
-      data: function () {
-        return {
-          editStream: false
-        }
+  export default {
+    name: 'StreamInformation',
+    components: {EditStream},
+    props: ['stream'],
+    data: function () {
+      return {
+        editStream: false
+      }
+    },
+    computed: {
+      getIcon () {
+        return (this.stream.icon) ? this.stream.icon : 'static/Icons/noImage.svg'
+      }
+    },
+    methods: {
+      updateFavourite () {
+        this.$store.commit(StreamLinkGuiMutations.UPDATE_FAVOURITE, this.stream.id)
       },
-      computed: {
-        getIcon () {
-          return (this.stream.icon) ? this.stream.icon : '/static/Icons/noImage.svg'
-        }
+      updateStream (stream) {
+        this.$store.commit(StreamLinkGuiMutations.UPDATE_STREAM, stream)
       },
-      methods: {
-        updateFavourite () {
-          this.$store.commit(StreamLinkGuiMutations.UPDATE_FAVOURITE, this.stream.id)
-        },
-        updateStream (stream) {
-          this.$store.commit(StreamLinkGuiMutations.UPDATE_STREAM, stream)
-        },
-        deleteStream () {
-          this.$emit('deleteStream', this.stream.id)
-        },
-        setEditStream (val) {
-          this.editStream = val
-        },
-        setEditStreamTrue () {
-          this.editStream = true
-        },
-        playStream () {
-          this.$store.dispatch(StreamLinkGuiActions.PLAY_STREAM, this.stream)
-        }
+      deleteStream () {
+        this.$emit('deleteStream', this.stream.id)
+      },
+      setEditStream (val) {
+        this.editStream = val
+      },
+      setEditStreamTrue () {
+        this.editStream = true
+      },
+      playStream () {
+        this.$store.dispatch(StreamLinkGuiActions.QUALITY_CHOICE, this.stream)
       }
     }
+  }
 </script>
 
 <style scoped>
