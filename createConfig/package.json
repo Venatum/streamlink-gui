@@ -1,0 +1,19 @@
+{
+  "name": "createconfig",
+  "version": "1.0.0",
+  "description": "Web scraping to generate plugins.json",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Venatum (vincentlequec@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "fs": "0.0.1-security",
+    "puppeteer": "^1.17.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
+}
