@@ -1,5 +1,6 @@
 import {StreamLinkGuiMutations} from '@/store/mutations'
 import {getQualities, onLive, startStream, Storage} from '../tools'
+import Vue from 'vue'
 
 export const Files = {
   CONFIG: new Storage('config.json', {
@@ -47,11 +48,19 @@ const actions = {
       ctx.commit(StreamLinkGuiMutations.SET_PLUGINS, data)
     } catch (e) {
       // @TODO: solve pb
-      ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: 'No plugins.json file.', type: 'error'})
+      Vue.notify({
+        type: 'error',
+        title: 'Stream',
+        text: 'No plugins.json file.'
+      })
     }
   },
   [StreamLinkGuiActions.PLAY_STREAM]: async (ctx, stream) => {
-    ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: `Starting ${stream.url}`, type: 'info'})
+    Vue.notify({
+      type: 'success',
+      title: 'Stream',
+      text: `Starting ${stream.url}`
+    })
     startStream(`${ctx.state.config.exe} ${stream.url} ${stream.quality}`, ctx)
   },
   [StreamLinkGuiActions.ON_LIVE]: async (ctx, streams) => {
@@ -78,13 +87,21 @@ const actions = {
     }
   },
   [StreamLinkGuiActions.QUALITY_CHOICE]: async (ctx, stream) => {
-    ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: `Starting ${stream.url}`, type: 'info'})
+    Vue.notify({
+      type: 'success',
+      title: 'Stream',
+      text: `Starting ${stream.url}`
+    })
     if (await onLive(`${ctx.state.config.exe} ${stream.url}`)) {
       ctx.commit(StreamLinkGuiMutations.SET_STREAMED_STREAM, stream)
       ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: true})
       ctx.commit(StreamLinkGuiMutations.SET_STREAM_QUALITY, {default: stream.quality, display: true, qualities: getQualities(`${ctx.state.config.exe} ${stream.url}`)})
     } else {
-      ctx.commit(StreamLinkGuiMutations.SET_ALERT, { msg: `No playable streams found on this URL: ${stream.url}`, type: 'error' })
+      Vue.notify({
+        type: 'error',
+        title: 'Stream',
+        text: `No playable streams found on this URL: ${stream.url}`
+      })
       ctx.commit(StreamLinkGuiMutations.UPDATE_LIVE, {id: stream.id, live: false})
     }
   }

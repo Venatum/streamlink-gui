@@ -3,14 +3,18 @@ import axios from 'axios'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
 import '@fortawesome/fontawesome-free/css/all.css'
-
 import App from './App'
 import router from './router'
 import store from './store'
 
+import Notifications from 'vue-notification'
+import velocity from 'velocity-animate'
+
 Vue.use(Vuetify, {
   iconfont: 'fa'
 })
+Vue.use(Notifications, { velocity })
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false

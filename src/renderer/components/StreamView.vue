@@ -28,8 +28,6 @@
                 <v-spacer></v-spacer>
 
             </v-toolbar>
-            <!-- StreamAlert -->
-            <stream-alert class="px-0"></stream-alert>
             <v-container fluid>
                 <isotope ref="isotope" :list="getStreams" :options='option' style="margin: 0 auto;">
                     <div v-for="stream in getStreams" :key="stream.id"
@@ -64,14 +62,13 @@
 <script>
     import StreamInformation from './StreamView/StreamInformation'
     import {StreamLinkGuiMutations} from '../store/mutations'
-    import StreamAlert from './StreamView/StreamAlert'
     import Isotope from 'vueisotope'
     import StreamQuality from './StreamView/StreamQuality'
 
     export default {
       name: 'StreamView',
-      components: {StreamQuality, StreamAlert, StreamInformation, Isotope},
-      data: function () {
+      components: {StreamQuality, StreamInformation, Isotope},
+      data: () => {
         return {
           panelFavourite: true,
           panelStreams: true,

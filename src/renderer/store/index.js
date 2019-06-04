@@ -9,11 +9,6 @@ Vue.use(Vuex)
 const state = {
   streams: [],
   plugins: [],
-  alert: {
-    msg: 'Welcome to Streamlink-GUI',
-    type: 'success',
-    display: true
-  },
   config: {
     id: 0,
     language: 'english'

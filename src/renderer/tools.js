@@ -1,4 +1,4 @@
-import {StreamLinkGuiMutations} from '@/store/mutations'
+import Vue from 'vue'
 
 const childProcess = require('child_process')
 const electron = require('electron')
@@ -69,16 +69,32 @@ export function startStream (command, ctx) {
     data = data.toString('utf8')
     if (data.includes('error')) {
       let output = data.slice(data.indexOf('error:') + 6)
-      ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: output, type: 'error'})
+      Vue.notify({
+        type: 'error',
+        title: 'Stream',
+        text: output
+      })
     } else if (data.includes('info')) {
       let output = data.slice(data.indexOf('[info]') + 6)
-      ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: output, type: 'info'})
+      Vue.notify({
+        type: 'info',
+        title: 'Stream',
+        text: output
+      })
     } else {
-      ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: data, type: 'info'})
+      Vue.notify({
+        type: 'info',
+        title: 'Stream',
+        text: data
+      })
     }
   })
   cmd.stderr.on('data', (data) => {
-    ctx.commit(StreamLinkGuiMutations.SET_ALERT, {msg: data, type: 'error'})
+    Vue.notify({
+      type: 'error',
+      title: 'Stream',
+      text: data
+    })
   })
   cmd.on('error', (err) => {
     console.error('Failed to start child process.', err)
@@ -129,7 +145,6 @@ export class Storage {
     const userDataPath = (electron.app || electron.remote.app).getPath('userData')
 
     this.path = path.join(userDataPath, fileName)
-    console.log(this.path)
     fs.access(this.path, fs.constants.R_OK | fs.constants.W_OK, (err) => {
       if (err) {
         this.setData(data)

@@ -41,7 +41,6 @@
       },
       onCancel () {
         this.$store.commit(StreamLinkGuiMutations.SET_STREAM_QUALITY, {display: false, qualities: []})
-        this.$store.commit(StreamLinkGuiMutations.SET_ALERT, {msg: 'Welcome to Streamlink-GUI', type: 'success'})
       }
     }
   }
