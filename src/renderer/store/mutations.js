@@ -8,7 +8,6 @@ export const StreamLinkGuiMutations = {
   UPDATE_FAVOURITE: 'updateFavourite',
   UPDATE_LIVE: 'updateLive',
   SET_CONFIG: 'setConfig',
-  SET_ALERT: 'setAlert',
   SET_PLUGINS: 'setPlugins',
   SET_LIVE_LOADER: 'setLiveLoader',
   SET_STREAM_QUALITY: 'setStreamQuality',
@@ -63,11 +62,6 @@ const mutations = {
       state.config = config
     }
     Files.CONFIG.setData(state.config)
-  },
-  [StreamLinkGuiMutations.SET_ALERT]: (state, alert) => {
-    state.alert.msg = alert.msg
-    state.alert.type = alert.type
-    state.alert.display = true
   },
   [StreamLinkGuiMutations.SET_PLUGINS]: (state, plugins) => {
     state.plugins = plugins

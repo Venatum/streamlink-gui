@@ -1,6 +1,5 @@
 <template>
     <v-container grid-list-md text-xs-center>
-        <stream-alert class="px-0"></stream-alert>
         <v-card>
             <v-card-title class="grey">
                 <span class="headline">Play VOD / Stream</span>
@@ -12,7 +11,7 @@
                             <v-text-field
                                     label="Stream / VOD URL" required autofocus clearable
                                     hint="Example: youtube.com/watch?v=XXXXXXXXX"
-                                    prepend-icon="fas fa-link"
+                                    prepend-icon="fas fa-link" @keyup.enter="onPlay"
                                     v-model="stream.url">
                             </v-text-field>
                             <v-text-field disabled
@@ -45,7 +44,7 @@
                     </v-layout>
                 </v-container>
                 <small>* indicates required field</small>
-                <v-alert outline v-if="streamAlert.active" :value="streamAlert.active" :type="streamAlert.type"
+                <v-alert v-if="streamAlert.active" :value="streamAlert.active" :type="streamAlert.type"
                          style="text-align: center">
                     {{ this.streamAlert.msg }}
                 </v-alert>
@@ -80,13 +79,11 @@
   // import {checkURL, extractRootDomain} from '../tools'
   import {extractRootDomain} from '../tools'
   import {StreamLinkGuiActions} from '@/store/actions'
-  import {StreamLinkGuiMutations} from '@/store/mutations'
-  import StreamAlert from './StreamView/StreamAlert'
   import StreamQuality from './StreamView/StreamQuality'
 
   export default {
     name: 'PlayVODView',
-    components: {StreamQuality, StreamAlert},
+    components: {StreamQuality},
     data: function () {
       return {
         loading: false,
@@ -127,7 +124,7 @@
         for (let plugin in this.$store.state.plugins) {
           if (this.$store.state.plugins[plugin].urls.includes(this.stream.plugin.name)) {
             this.stream.plugin.name = this.$store.state.plugins[plugin].name
-            if ('notes' in this.$store.state.plugins[plugin]) {
+            if ('notes' in this.$store.state.plugins[plugin] && this.$store.state.plugins[plugin].notes !== null) {
               this.setStreamAlert(true, this.$store.state.plugins[plugin].notes, 'warning')
             }
             if ('auth' in this.$store.state.plugins[plugin]) {
@@ -174,14 +171,17 @@
         if (this.pluginFound()) {
           this.$store.dispatch(StreamLinkGuiActions.QUALITY_CHOICE, this.stream)
         } else {
-          this.$store.commit(StreamLinkGuiMutations.SET_ALERT, {msg: `Unable to find plugin: ${this.stream.plugin.name}`, type: 'error'})
+          this.$notify({
+            type: 'error',
+            title: 'Plugin not found',
+            text: `Unable to find plugin: <b>${this.stream.plugin.name}</b>`
+          })
         }
         this.loading = false
       },
       onClear () {
         this.resetStreamAlert()
         this.resetStream()
-        this.$store.commit(StreamLinkGuiMutations.SET_ALERT, {msg: 'Welcome to Streamlink-GUI', type: 'success'})
       }
     },
     computed: {

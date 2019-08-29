@@ -18,3 +18,5 @@ thumbs.db
 *.ntvs*
 *.njsproj
 *.sln
+
+createConfig/package-lock\.json

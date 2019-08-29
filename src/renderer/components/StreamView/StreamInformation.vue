@@ -1,47 +1,48 @@
 <template>
     <div>
         <v-card flat class="elevation-20 white--text">
-            <v-img class="streamLogo"
-                   :src="getIcon"
-                   height="200px"
-            ></v-img>
+            <v-img class="streamLogo" :src="getIcon" height="200px"></v-img>
             <v-card-title>
                 <v-layout align-center justify-space-around row fill-height>
-                    <v-icon v-if="stream.live" style="color: red">fas fa-circle</v-icon>
-                    <v-icon v-else style="color: grey">fas fa-circle</v-icon>
-                    {{ stream.name }}
+                    <v-icon :style="{ color: (stream.live) ? 'red' : 'grey' }">fas fa-circle</v-icon>
+                    <v-spacer></v-spacer>
+                    <span class="body-2">{{ stream.name }}</span>
+                    <v-spacer></v-spacer>
                     <v-tooltip bottom>
-                        <v-btn @click="playStream" icon flat slot="activator">
-                            <v-icon>far fa-play-circle</v-icon>
-                        </v-btn>
+                        <template v-slot:activator="{ on }">
+                            <v-btn @click="playStream" icon v-on="on">
+                                <v-icon>far fa-play-circle</v-icon>
+                            </v-btn>
+                        </template>
                         <span>Play</span>
                     </v-tooltip>
                 </v-layout>
             </v-card-title>
             <v-card-actions>
                 <v-layout align-center justify-space-around row fill-height>
-                    <v-tooltip v-if="stream.favourite" bottom>
-                        <v-btn @click="updateFavourite" icon flat color="yellow" slot="activator">
-                            <v-icon>star</v-icon>
-                        </v-btn>
-                        <span>Remove from favourite</span>
-                    </v-tooltip>
-                    <v-tooltip v-else bottom>
-                        <v-btn @click="updateFavourite" icon flat color="grey" slot="activator">
-                            <v-icon>star</v-icon>
-                        </v-btn>
-                        <span>Add to favourite</span>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <v-btn @click="updateFavourite" icon :color="(stream.favourite) ? 'yellow' : 'grey'" v-on="on">
+                                <v-icon>star</v-icon>
+                            </v-btn>
+                        </template>
+                        <span v-if="stream.favourite">Remove from favourite</span>
+                        <span v-else>Add to favourite</span>
                     </v-tooltip>
                     <v-tooltip bottom>
-                        <v-btn @click="setEditStreamTrue" icon flat color="primary" slot="activator">
-                            <v-icon>fas fa-edit</v-icon>
-                        </v-btn>
+                        <template v-slot:activator="{ on }">
+                            <v-btn @click="setEditStreamTrue" icon color="primary" v-on="on">
+                                <v-icon>fas fa-edit</v-icon>
+                            </v-btn>
+                        </template>
                         <span>Edit stream</span>
                     </v-tooltip>
                     <v-tooltip bottom>
-                        <v-btn @click="deleteStream" icon flat color="red" slot="activator">
-                            <v-icon>fas fa-trash-alt</v-icon>
-                        </v-btn>
+                        <template v-slot:activator="{ on }">
+                            <v-btn @click="deleteStream" icon color="red" v-on="on">
+                                <v-icon>fas fa-trash-alt</v-icon>
+                            </v-btn>
+                        </template>
                         <span>Delete stream</span>
                     </v-tooltip>
                 </v-layout>
