@@ -11,11 +11,6 @@ export default new Router({
       component: require('@/components/StreamView').default
     },
     {
-      path: '/sensitive_content',
-      name: 'Sensitive content',
-      component: require('@/components/SensitiveView').default
-    },
-    {
       path: '/play_vod',
       name: 'Play VOD / Stream',
       component: require('@/components/PlayVODView').default

@@ -1,80 +1,80 @@
 <template>
-    <div id="app">
-        <v-app dark>
-            <v-navigation-drawer
-                    fixed
-                    :mini-variant="miniVariant"
-                    v-model="drawer"
-                    app
-            >
-                <v-list>
-                    <v-list-tile
-                            router
-                            :to="item.to"
-                            :key="i"
-                            v-for="(item, i) in items"
-                            exact
-                    >
-                        <v-list-tile-action>
-                            <v-icon v-html="item.icon"></v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title v-text="item.title"></v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
-            </v-navigation-drawer>
-            <v-toolbar fixed app>
-                <v-toolbar-side-icon @click.native.stop="drawer = !drawer"></v-toolbar-side-icon>
-                <v-btn icon @click.native.stop="miniVariant = !miniVariant">
-                    <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
-                </v-btn>
-                <v-toolbar-title v-text="title"></v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-btn v-if="update" icon flat color="orange" @click="openUpdate">
-                    <v-icon>notification_important</v-icon>
-                </v-btn>
-                <v-btn v-if="isConnected" icon flat color="green">
-                    <v-icon>wifi</v-icon>
-                </v-btn>
-                <v-btn v-else icon flat color="red">
-                    <v-icon>wifi_off</v-icon>
-                </v-btn>
-                <v-btn icon flat color="red"
-                       :loading="this.$store.state.liveLoader"
-                       :disabled="this.$store.state.liveLoader"
-                       @click="reloadIsLive">
-                    <v-icon>cached</v-icon>
-                </v-btn>
-                <v-btn icon flat color="grey" @click="showConfig = !showConfig">
-                    <v-icon>settings</v-icon>
-                </v-btn>
-            </v-toolbar>
-            <v-content>
-                <v-container fluid fill-height>
-                    <v-slide-y-transition mode="out-in">
-                        <router-view></router-view>
-                    </v-slide-y-transition>
+    <v-app dark>
+        <v-navigation-drawer
+                fixed
+                :mini-variant="miniVariant"
+                v-model="drawer"
+                app
+                dark
+                clipped
+        >
+            <v-list>
+                <v-list-item
+                        router
+                        :to="item.to"
+                        :key="i"
+                        v-for="(item, i) in items"
+                        exact
+                >
+                    <v-list-item-action>
+                        <v-icon v-html="item.icon"></v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title v-text="item.title"></v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
+        <v-app-bar fixed app dark clipped-left>
+            <v-app-bar-nav-icon @click.native.stop="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-btn icon @click.native.stop="miniVariant = !miniVariant">
+                <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
+            </v-btn>
+            <v-toolbar-title v-text="title"></v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn v-if="update" icon color="orange" @click="openUpdate">
+                <v-icon>notification_important</v-icon>
+            </v-btn>
+            <v-btn v-if="isConnected" icon color="green">
+                <v-icon>wifi</v-icon>
+            </v-btn>
+            <v-btn v-else icon color="red">
+                <v-icon>wifi_off</v-icon>
+            </v-btn>
+            <v-btn icon color="red"
+                   :loading="this.$store.state.liveLoader"
+                   :disabled="this.$store.state.liveLoader"
+                   @click="reloadIsLive">
+                <v-icon>cached</v-icon>
+            </v-btn>
+            <v-btn icon color="grey" @click="showConfig = !showConfig">
+                <v-icon>settings</v-icon>
+            </v-btn>
+        </v-app-bar>
+        <v-content>
+            <v-container fluid fill-height>
+                <v-slide-y-transition mode="out-in">
+                    <router-view></router-view>
+                </v-slide-y-transition>
 
-                    <add-stream v-if="addStream" :add-stream="addStream" v-on:setAddStream="setAddStream"></add-stream>
+                <add-stream v-if="addStream" :add-stream="addStream" v-on:setAddStream="setAddStream"></add-stream>
 
-                    <config v-if="showConfig" :show-config="showConfig"></config>
+                <config v-if="showConfig" :show-config="showConfig"></config>
 
-                    <v-fab-transition>
-                        <v-btn dark fab fixed bottom right
-                               v-show="activeFab"
-                               color="primary"
-                               @click="addStream = !addStream">
-                            <v-icon>add</v-icon>
-                        </v-btn>
-                    </v-fab-transition>
+                <v-fab-transition>
+                    <v-btn dark fab fixed bottom right
+                           v-show="activeFab"
+                           color="primary"
+                           @click="addStream = !addStream">
+                        <v-icon>add</v-icon>
+                    </v-btn>
+                </v-fab-transition>
 
-                </v-container>
-                <notifications position="bottom left" animation-type="velocity"></notifications>
-            </v-content>
-            <v-navigation-drawer temporary fixed app></v-navigation-drawer>
-        </v-app>
-    </div>
+            </v-container>
+            <notifications position="bottom left" animation-type="velocity"></notifications>
+        </v-content>
+        <v-navigation-drawer temporary fixed app></v-navigation-drawer>
+    </v-app>
 </template>
 
 <script>
@@ -92,7 +92,6 @@
       items: [
         {icon: 'play_circle_outline', title: 'Play VOD / Stream', to: '/play_vod'},
         {icon: 'video_library', title: 'Streams', to: '/'},
-        {icon: 'lock_open', title: 'Sensitive content', to: '/sensitive_content'},
         {icon: 'fab fa-vuejs', title: 'Electron-vue + Vuetify', to: '/vue'}
       ],
       miniVariant: false,
@@ -158,6 +157,9 @@
             this.update = false
           })
       }
+    },
+    created () {
+      this.$vuetify.theme.dark = true
     },
     mounted () {
       this.$store.dispatch(StreamLinkGuiActions.SET_CONFIG)

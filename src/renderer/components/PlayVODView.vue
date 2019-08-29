@@ -1,6 +1,5 @@
 <template>
     <v-container grid-list-md text-xs-center>
-        <stream-alert class="px-0"></stream-alert>
         <v-card>
             <v-card-title class="grey">
                 <span class="headline">Play VOD / Stream</span>
@@ -12,7 +11,7 @@
                             <v-text-field
                                     label="Stream / VOD URL" required autofocus clearable
                                     hint="Example: youtube.com/watch?v=XXXXXXXXX"
-                                    prepend-icon="fas fa-link"
+                                    prepend-icon="fas fa-link" @keyup.enter="onPlay"
                                     v-model="stream.url">
                             </v-text-field>
                             <v-text-field disabled
@@ -45,7 +44,7 @@
                     </v-layout>
                 </v-container>
                 <small>* indicates required field</small>
-                <v-alert outline v-if="streamAlert.active" :value="streamAlert.active" :type="streamAlert.type"
+                <v-alert v-if="streamAlert.active" :value="streamAlert.active" :type="streamAlert.type"
                          style="text-align: center">
                     {{ this.streamAlert.msg }}
                 </v-alert>

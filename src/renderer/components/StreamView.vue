@@ -1,136 +1,119 @@
 <template>
-    <v-container grid-list-md text-xs-center>
-        <v-layout row wrap>
-            <v-toolbar fixed app style="margin-top: 64px">
+    <v-container fluid grid-list-md>
+        <v-data-iterator :items="getStreams" :search="search">
+        <template v-slot:header>
+                <v-toolbar dark color="darken-3" class="mb-1">
+                    <v-text-field v-model="search" clearable flat solo-inverted hide-details
+                                  prepend-inner-icon="search" label="Search"></v-text-field>
+                    <template v-if="$vuetify.breakpoint.mdAndUp">
+                        <div class="flex-grow-1"></div>
+                        <v-toolbar-title style="padding-right: 30px">Filter by</v-toolbar-title>
+                        <v-btn-toggle v-model="streamFilter">
+                            <v-btn rounded value="all" @click="filter('all')">Show All</v-btn>
+                            <v-btn rounded value="favourite" @click="filter('favourite')">Favourite</v-btn>
+                            <v-btn rounded value="onLine" @click="filter('onLine')">On Line</v-btn>
+                            <v-btn rounded value="offLine" @click="filter('offLine')">Off Line</v-btn>
+                        </v-btn-toggle>
+                    </template>
+                </v-toolbar>
+            </template>
 
-                <v-spacer></v-spacer>
-                <v-toolbar-title>Filter by</v-toolbar-title>
-                <v-spacer></v-spacer>
-
-                <v-btn-toggle v-model="streamFilter">
-                    <v-btn flat value="all" @click="filter('all')">Show All</v-btn>
-                    <v-btn flat value="favourite" @click="filter('favourite')">Favourite</v-btn>
-                    <v-btn flat value="onLine" @click="filter('onLine')">On Line</v-btn>
-                    <v-btn flat value="offLine" @click="filter('offLine')">Off Line</v-btn>
-                </v-btn-toggle>
-
-                <v-spacer></v-spacer>
-                <v-divider vertical inset></v-divider>
-                <v-spacer></v-spacer>
-                <v-toolbar-title>Sort by</v-toolbar-title>
-                <v-spacer></v-spacer>
-
-                <v-btn-toggle v-model="streamSort">
-                    <v-btn flat value="id" @click="sort('id')">Id</v-btn>
-                    <v-btn flat value="name" @click="sort('name')">Name</v-btn>
-                </v-btn-toggle>
-
-                <v-spacer></v-spacer>
-
-            </v-toolbar>
-            <v-container fluid>
-                <isotope ref="isotope" :list="getStreams" :options='option' style="margin: 0 auto;">
-                    <div v-for="stream in getStreams" :key="stream.id"
-                         v-if="!stream.sensitive"
-                         class="isotope" style="margin-bottom: 10px; padding: 10px; min-width: 300px; min-height: 300px;">
+            <template v-slot:default="props">
+                <v-layout wrap>
+                    <v-flex xs-12 sm6 md4 lg2 v-for="stream in props.items" :key="stream.id">
                         <stream-information :stream="stream" v-on:deleteStream="deleteStream"></stream-information>
-                    </div>
-                </isotope>
-            </v-container>
-        </v-layout>
-        <!-- Delete Alerte -->
+                    </v-flex>
+                </v-layout>
+            </template>
+        </v-data-iterator>
+
+        <!-- Delete Alert -->
         <v-dialog v-model="deleteAlerte" persistent max-width="500px">
             <v-card>
                 <v-card-title class="headline red">Delete stream</v-card-title>
                 <v-card-text>Are you sure to delete this stream?</v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" flat @click.native="deleteAlerte = false">
+                    <v-btn color="blue darken-1" text @click.native="deleteAlerte = false">
                         Cancel
                     </v-btn>
-                    <v-btn color="red darken-1" flat @click.native="deleteAlerte = false" @click="deleteConfirm">
+                    <v-btn color="red darken-1" text @click.native="deleteAlerte = false" @click="deleteConfirm">
                         Delete
                     </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
         <!-- StreamQuality -->
         <stream-quality v-if="onQuality" :onQuality="onQuality"></stream-quality>
     </v-container>
 </template>
 
 <script>
-    import StreamInformation from './StreamView/StreamInformation'
-    import {StreamLinkGuiMutations} from '../store/mutations'
-    import Isotope from 'vueisotope'
-    import StreamQuality from './StreamView/StreamQuality'
+  import StreamInformation from './StreamView/StreamInformation'
+  import {StreamLinkGuiMutations} from '../store/mutations'
+  import Isotope from 'vueisotope'
+  import StreamQuality from './StreamView/StreamQuality'
 
-    export default {
-      name: 'StreamView',
-      components: {StreamQuality, StreamInformation, Isotope},
-      data: () => {
-        return {
-          panelFavourite: true,
-          panelStreams: true,
-          deleteAlerte: false,
-          deleteId: -1,
-          option: {
-            itemSelector: '.isotope',
-            getFilterData: {
-              all: function () {
-                return true
-              },
-              favourite: function (el) {
-                return el.favourite
-              },
-              onLine: function (el) {
-                return el.live
-              },
-              offLine: function (el) {
-                return !el.live
-              }
-            },
-            getSortData: {
-              name: 'name',
-              live: 'live'
-            },
-            layout: 'masonry',
-            masonry: {
-              columnWidth: 300,
-              fitWidth: true,
-              gutter: 10
-            }
-          },
-          streamFilter: 'all',
-          streamSort: 'id'
+  export default {
+    name: 'StreamView',
+    components: {StreamQuality, StreamInformation, Isotope},
+    data: () => {
+      return {
+        streams: [],
+        search: '',
+        streamFilter: true,
+        deleteAlerte: false,
+        deleteId: -1
+      }
+    },
+    methods: {
+      filter: function (key) {
+        switch (key) {
+          case 'all':
+            this.setStreams()
+            break
+          case 'favourite':
+            this.streams = this.$store.getters.getStreams.filter((stream) => stream.favourite)
+            break
+          case 'onLine':
+            this.streams = this.$store.getters.getStreams.filter((stream) => stream.live)
+            break
+          case 'offLine':
+            this.streams = this.$store.getters.getStreams.filter((stream) => !stream.live)
+            break
         }
       },
-      methods: {
-        sort: function (key) {
-          this.$refs.isotope.sort(key)
-        },
-        filter: function (key) {
-          this.$refs.isotope.filter(key)
-        },
-        deleteStream (id) {
-          this.deleteId = id
-          this.deleteAlerte = true
-        },
-        deleteConfirm () {
-          this.$store.commit(StreamLinkGuiMutations.DEL_STREAM, this.deleteId)
-        }
+      deleteStream (id) {
+        this.deleteId = id
+        this.deleteAlerte = true
       },
-      computed: {
-        getStreams () {
-          return this.$store.state.streams
-        },
-        onQuality () {
-          return this.$store.state.quality.display
+      deleteConfirm () {
+        this.$store.commit(StreamLinkGuiMutations.DEL_STREAM, this.deleteId)
+        this.setStreams()
+      },
+      setStreams () {
+        this.streams = this.$store.getters.getStreams
+        if (this.streams.length === 0) {
+          setTimeout(this.setStreams)
         }
       }
+    },
+    computed: {
+      getStreams () {
+        return this.streams
+        // return this.$store.getters.getStreams
+      },
+      onQuality () {
+        return this.$store.state.quality.display
+      }
+    },
+    mounted () {
+      this.setStreams()
     }
+  }
 </script>
 
-<style scoped>
+<style>
 
 </style>

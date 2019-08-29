@@ -12,8 +12,8 @@
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
-                    <v-btn color="red darken-1" flat @click="onCancel">Cancel</v-btn>
-                    <v-btn color="green darken-1" flat @click="onPlay">Play</v-btn>
+                    <v-btn color="red darken-1" text @click="onCancel">Cancel</v-btn>
+                    <v-btn color="green darken-1" text @click="onPlay">Play</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>

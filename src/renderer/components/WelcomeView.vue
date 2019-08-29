@@ -26,7 +26,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn primary flat router to="/inspire">Continue</v-btn>
+                    <v-btn primary router to="/inspire">Continue</v-btn>
                 </v-card-actions>
             </v-card>
         </v-flex>
