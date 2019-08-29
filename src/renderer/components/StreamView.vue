@@ -1,6 +1,13 @@
 <template>
     <v-container fluid grid-list-md>
-        <v-data-iterator :items="getStreams" :search="search">
+        <v-data-iterator :items="getStreams"
+                         :search="search"
+                         :items-per-page.sync="itemsPerPage"
+                         :footer-props="{
+                            itemsPerPageOptions: itemsPerPageArray,
+                            showCurrentPage: true,
+                            showFirstLastPage: true
+                         }">
         <template v-slot:header>
                 <v-toolbar dark color="darken-3" class="mb-1">
                     <v-text-field v-model="search" clearable flat solo-inverted hide-details
@@ -62,6 +69,8 @@
       return {
         streams: [],
         search: '',
+        itemsPerPageArray: [2, 4, 6, 12, 24, -1],
+        itemsPerPage: 12,
         streamFilter: true,
         deleteAlerte: false,
         deleteId: -1
